@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
   FlatList
@@ -20,7 +21,8 @@ export default class HomeScreen extends React.Component {
 
     this.state = {
       concerts: null,
-      gotData: false
+      gotData: false,
+      searchString: ""
     };
   }
   static navigationOptions = {
@@ -52,17 +54,32 @@ export default class HomeScreen extends React.Component {
     );
   };
 
+  onSearch = data => {
+    this.setState({ searchString: data });
+  };
+
   render() {
     const { concerts } = this.state;
-    console.log(concerts);
+    console.log(this.state);
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-        <FlatList
-          data={concerts}
-          renderItem={this.renderItem}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </ScrollView>
+      <View>
+        <View style={styles.filterContainer}>
+          {/* <Text style={styles.filterText}>Search</Text> */}
+          <TextInput
+            placeholder="Search"
+            style={styles.search}
+            onChangeText={this.onSearch}
+            value={this.state.searchString}
+          />
+        </View>
+        <ScrollView contentContainerStyle={styles.container}>
+          <FlatList
+            data={concerts}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -85,5 +102,24 @@ const styles = StyleSheet.create({
   image: {
     height: 125,
     width: 125
+  },
+  filterContainer: {
+    padding: 5,
+    paddingLeft: 15,
+    paddingRight: 15,
+    height: 50,
+    marginTop: 25,
+    backgroundColor: "rgb(255,210,255)",
+    alignContent: "center"
+  },
+  search: {
+    paddingLeft: 10,
+    fontSize: 20,
+    backgroundColor: "rgb(242, 237, 241)",
+    height: 40,
+    borderRightWidth: 2,
+    borderLeftWidth: 2,
+    borderColor: "#FFFFFF",
+    borderRadius: 15
   }
 });
