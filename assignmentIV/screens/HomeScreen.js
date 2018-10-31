@@ -1,8 +1,8 @@
 import React from "react";
 import $ from "jquery";
 import {
+  ActivityIndicator,
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,9 +12,9 @@ import {
 } from "react-native";
 import Swipeable from "react-native-swipeable";
 
-import { WebBrowser } from "expo";
-
-import { MonoText } from "../components/StyledText";
+/* Components */
+import ListHeader from "../components/ListHeader";
+import ListFooter from "../components/ListFooter";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -76,9 +76,12 @@ export default class HomeScreen extends React.Component {
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <FlatList
+          ListEmptyComponent={<ActivityIndicator size="large" />}
+          ListHeaderComponent={<ListHeader />}
           data={concerts}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={<ListFooter />}
         />
       </ScrollView>
     );
