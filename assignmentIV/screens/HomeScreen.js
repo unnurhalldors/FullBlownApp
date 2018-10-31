@@ -51,15 +51,13 @@ export default class HomeScreen extends React.Component {
   render() {
     const { concerts } = this.state;
     return (
-      <View style={styles.container}>
-        <ScrollView>
-          <FlatList
-            data={concerts}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </ScrollView>
-      </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <FlatList
+          data={concerts}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </ScrollView>
     );
   }
 }
