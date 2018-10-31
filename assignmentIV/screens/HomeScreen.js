@@ -38,11 +38,15 @@ export default class HomeScreen extends React.Component {
   }
 
   renderItem = ({ item }) => {
-    const { dispatch } = this.props;
     return (
-      <View>
-        <View>
+      <View style={styles.concertContainer}>
+        <Image style={styles.image} source={{ uri: item.imageSource }} />
+        <View styles={styles.concertInfo}>
+          <Text>{item.name}</Text>
           <Text>{item.dateOfShow}</Text>
+          <Text>{item.eventDateName}</Text>
+          <Text>{item.eventHallName}</Text>
+          <Text>{item.userGroupName}</Text>
         </View>
       </View>
     );
@@ -50,24 +54,37 @@ export default class HomeScreen extends React.Component {
 
   render() {
     const { concerts } = this.state;
+    console.log(concerts);
     return (
-      <View style={styles.container}>
-        <ScrollView>
-          <FlatList
-            data={concerts}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </ScrollView>
-      </View>
+      <ScrollView contentContainerStyle={styles.container}>
+        <FlatList
+          data={concerts}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    padding: 8,
+    marginTop: 20
+  },
+  concertContainer: {
     flex: 1,
-    backgroundColor: "#fff"
+    flexDirection: "row",
+    paddingBottom: 16
+  },
+  concertInfo: {
+    paddingLeft: 20,
+    justifyContent: "space-around",
+    flex: 1
+  },
+  image: {
+    height: 125,
+    width: 125
   },
   developmentModeText: {
     marginBottom: 20,
