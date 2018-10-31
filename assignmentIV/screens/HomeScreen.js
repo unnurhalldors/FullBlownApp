@@ -13,19 +13,25 @@ import {
 import Swipeable from 'react-native-swipeable';
 
 /* Components */
-import ListHeader from '../components/ListHeader';
+import Header from '../components/Header';
 import ListFooter from '../components/ListFooter';
 
 /* All Styles */
 const styles = StyleSheet.create({
   container: {
-    padding: 8,
-    marginTop: 20,
+    flex: 1,
+    alignContent: 'center',
+    backgroundColor: '#fff',
   },
   concertContainer: {
     flex: 1,
     flexDirection: 'row',
-    paddingBottom: 16,
+    borderRadius: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(247,247,247,1.0)',
+    marginLeft: 16,
+    paddingBottom: 10,
+    paddingTop: 10,
   },
   concertInfo: {
     paddingLeft: 8,
@@ -36,24 +42,18 @@ const styles = StyleSheet.create({
     height: 125,
     width: 125,
   },
-  filterContainer: {
-    padding: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    height: 50,
-    marginTop: 25,
-    backgroundColor: 'rgb(255,210,255)',
-    alignContent: 'center',
+  searchContainer: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#ccc',
+    width: '100%',
+    padding: 16,
   },
   search: {
     paddingLeft: 10,
-    fontSize: 20,
-    backgroundColor: 'rgb(242, 237, 241)',
+    fontSize: 18,
+    backgroundColor: '#f2f2f2',
     height: 40,
-    borderRightWidth: 2,
-    borderLeftWidth: 2,
-    borderColor: '#FFFFFF',
-    borderRadius: 15,
+    borderRadius: 10,
   },
 });
 
@@ -117,20 +117,20 @@ export default class HomeScreen extends React.Component {
 
     console.log(this.state);
     return (
-      <View>
-        <View style={styles.filterContainer}>
-          {/* <Text style={styles.filterText}>Search</Text> */}
+      <View style={styles.container}>
+        <View style={styles.searchContainer}>
+          <Header />
           <TextInput
             placeholder="Search"
+            placeholderTextColor="#a8a6a6"
             style={styles.search}
             onChangeText={this.onSearch}
             value={searchString}
           />
         </View>
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView contentContainerStyle={styles.listContainer}>
           <FlatList
             ListEmptyComponent={<ActivityIndicator size="large" />}
-            ListHeaderComponent={<ListHeader />}
             data={concerts}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}

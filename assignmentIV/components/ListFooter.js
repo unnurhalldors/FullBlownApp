@@ -1,31 +1,29 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 /* All styles */
 const styles = StyleSheet.create({
   footer: {
     flex: 1,
-    backgroundColor: "rgba(247,247,247,1.0)",
+    backgroundColor: 'rgba(247,247,247,1.0)',
     padding: 17,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 10,
-    marginRight: 16
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 16,
   },
   footerText: {
-    color: "rgb(47, 49, 51)",
-    fontFamily: "Arial",
-    fontWeight: "bold",
+    color: 'rgb(47, 49, 51)',
+    fontFamily: 'Arial',
+    fontWeight: 'bold',
     fontSize: 18,
-    textAlign: "center"
+    textAlign: 'center',
   },
   footerTextTwo: {
-    color: "black",
-    fontFamily: "Verdana",
+    color: 'black',
+    fontFamily: 'Verdana',
     fontSize: 12,
-    textAlign: "center"
-  }
+    textAlign: 'center',
+  },
 });
 
 /* Just for decoration */
