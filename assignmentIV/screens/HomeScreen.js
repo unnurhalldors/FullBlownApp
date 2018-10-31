@@ -10,6 +10,8 @@ import {
   View,
   FlatList
 } from "react-native";
+import Swipeable from "react-native-swipeable";
+
 import { WebBrowser } from "expo";
 
 import { MonoText } from "../components/StyledText";
@@ -37,18 +39,34 @@ export default class HomeScreen extends React.Component {
       });
   }
 
+  rightButtons = concert => [
+    <TouchableOpacity style={styles.favoriteHighLight} onPress={() => {}}>
+      <Text style={styles.delete}>Favorite</Text>
+    </TouchableOpacity>
+  ];
+
+  goToDetail = concert => {
+    const { navigation } = this.props;
+    navigation.navigate("Detail", concert);
+  };
+
   renderItem = ({ item }) => {
     return (
-      <View style={styles.concertContainer}>
-        <Image style={styles.image} source={{ uri: item.imageSource }} />
-        <View styles={styles.concertInfo}>
-          <Text>{item.name}</Text>
-          <Text>{item.dateOfShow}</Text>
-          <Text>{item.eventDateName}</Text>
-          <Text>{item.eventHallName}</Text>
-          <Text>{item.userGroupName}</Text>
-        </View>
-      </View>
+      <Swipeable rightButtons={this.rightButtons(item)}>
+        <TouchableOpacity
+          style={styles.concertContainer}
+          onPress={() => this.goToDetail(item)}
+        >
+          <Image style={styles.image} source={{ uri: item.imageSource }} />
+          <View styles={styles.concertInfo}>
+            <Text>{item.name}</Text>
+            <Text>{item.dateOfShow}</Text>
+            <Text>{item.eventDateName}</Text>
+            <Text>{item.eventHallName}</Text>
+            <Text>{item.userGroupName}</Text>
+          </View>
+        </TouchableOpacity>
+      </Swipeable>
     );
   };
 
