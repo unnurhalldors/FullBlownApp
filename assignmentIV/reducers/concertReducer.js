@@ -1,13 +1,10 @@
-import { UPDATE_CONCERT } from "../constants/concertConstants";
+import { UPDATE_CONCERT } from '../constants/concertConstants';
 
 const concertReducer = (state = [], action) => {
   switch (action.type) {
     case UPDATE_CONCERT:
       return state.map(
-        concert =>
-          concert.id === action.id
-            ? { ...concert, favorited: !todo.favorited }
-            : concert
+        concert => (concert.id === action.id ? { ...concert, favorited: !concert.favorited } : concert),
       );
     default:
       return state;

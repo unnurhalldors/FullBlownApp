@@ -1,8 +1,8 @@
-import { UPDATE_CONCERT } from "../constants/concertConstants";
+import { UPDATE_CONCERT } from '../constants/concertConstants';
 
-export const updateTodo = id => {
-  return {
-    type: UPDATE_CONCERT,
-    id
-  };
-};
+const updateConcert = id => ({
+  type: UPDATE_CONCERT,
+  id,
+});
+
+export default updateConcert;
