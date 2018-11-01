@@ -13,6 +13,7 @@ import {
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Icon } from 'expo';
 
 /* Action */
 import { fetchConcerts, updateConcert } from '../actions/concertActions';
@@ -60,6 +61,9 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
   },
+  favoriteHighLight: {
+    marginTop: 10,
+  },
 });
 
 class HomeScreen extends React.Component {
@@ -93,7 +97,7 @@ class HomeScreen extends React.Component {
       )
       }
     >
-      <Text style={styles.delete}>Favorite</Text>
+      <Icon.FontAwesome name="heart-o" />
     </TouchableOpacity>,
   ];
 
