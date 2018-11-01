@@ -2,7 +2,8 @@ import React from 'react';
 import {
   StyleSheet, Text, View, Image,
 } from 'react-native';
-// import Moment from 'react-moment';
+import moment from 'moment';
+// import 'moment/src/locale/is';  VIRKAR EKKI
 
 // Styles
 const styles = StyleSheet.create({
@@ -98,7 +99,9 @@ const DetailScreen = ({ navigation }) => (
       <View style={styles.rowStyle}>
         <Text>TÍMASETNING</Text>
         <Text style={styles.concertInfo}>
-          {new Date(navigation.state.params.dateOfShow).toLocaleString('is-IS')}
+          {moment(navigation.state.params.dateOfShow)
+            .locale('is')
+            .format('llll')}
         </Text>
       </View>
     </View>
