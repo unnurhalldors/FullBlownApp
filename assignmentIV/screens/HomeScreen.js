@@ -12,8 +12,9 @@ import {
 } from 'react-native';
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
+import { Icon } from 'expo';
 
-import { fetchConcerts } from '../actions/concertActions';
+import { fetchConcerts, updateConcert } from '../actions/concertActions';
 
 /* Components */
 import Header from '../components/Header';
@@ -58,6 +59,9 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
   },
+  favoriteHighLight: {
+    marginTop: 10
+  }
 });
 
 class HomeScreen extends React.Component {
@@ -84,8 +88,14 @@ class HomeScreen extends React.Component {
   }
 
   rightButtons = concert => [
-    <TouchableOpacity style={styles.favoriteHighLight} onPress={() => {}}>
-      <Text style={styles.delete}>Favorite</Text>
+    <TouchableOpacity
+      style={styles.favoriteHighLight}
+      onPress={() => this.props.dispatch(
+        updateConcert(concert.eventDateName, concert.dateOfShow, concert.favourited),
+      )
+      }
+    >
+      <Icon.FontAwesome name="heart-o" />
     </TouchableOpacity>,
   ];
 
@@ -116,8 +126,8 @@ class HomeScreen extends React.Component {
   render() {
     const { searchString } = this.state;
     const { concerts } = this.props;
+    console.log(concerts);
 
-    console.log(this.props.concerts.results);
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>

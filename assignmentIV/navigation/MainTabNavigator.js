@@ -19,11 +19,7 @@ HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      name="info-circle"
     />
   ),
 };
@@ -34,7 +30,17 @@ const FavouriteStack = createStackNavigator({
 
 FavouriteStack.navigationOptions = {
   tabBarLabel: 'Favourites',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-heart" />,
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name="heart" />)
+};
+
+const MapStack = createStackNavigator({
+  MapStack: MapScreen,
+});
+
+MapStack.navigationOptions = {
+  tabBarLabel: 'Map',
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="map-marker" />,
 };
 
 const SettingsStack = createStackNavigator({
@@ -46,22 +52,14 @@ SettingsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+      name="gear"
     />
   ),
-};
-const MapStack = createStackNavigator({
-  MapStack: MapScreen,
-});
-
-MapStack.navigationOptions = {
-  tabBarLabel: 'Map',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-map" />,
 };
 
 export default createBottomTabNavigator({
   HomeStack,
   FavouriteStack,
-  SettingsStack,
   MapStack,
+  SettingsStack,
 });
