@@ -140,6 +140,27 @@ class HomeScreen extends React.Component {
     this.setState({ searchString: data });
   };
 
+  filteredData = (concerts) => {
+    const results = [];
+    const { searchString } = this.state;
+
+    if (searchString !== '') {
+      for (let i = 0; i < concerts.length; i++) {
+        for (key in concerts[i]) {
+          if (typeof concerts[i][key] === 'string') {
+            if (concerts[i][key].indexOf(searchString) != -1) {
+              if (!results.includes(concerts[i])) {
+                results.push(concerts[i]);
+              }
+            }
+          }
+        }
+      }
+      return results;
+    }
+    return concerts;
+  };
+
   render() {
     const { searchString } = this.state;
     const { concerts } = this.props;
@@ -159,7 +180,7 @@ class HomeScreen extends React.Component {
         <ScrollView>
           <FlatList
             ListEmptyComponent={<ActivityIndicator size="large" />}
-            data={concerts}
+            data={this.filteredData(concerts)}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
             ListFooterComponent={<ListFooter />}
