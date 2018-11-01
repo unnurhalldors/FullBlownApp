@@ -13,6 +13,8 @@ import {
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 
+import { fetchConcerts } from '../actions/concertActions';
+
 /* Components */
 import Header from '../components/Header';
 import ListFooter from '../components/ListFooter';
@@ -67,17 +69,15 @@ class HomeScreen extends React.Component {
     super(props);
 
     this.state = {
-      concerts: null,
-      gotData: false,
       searchString: '',
     };
   }
 
   componentDidMount() {
+    const { dispatch } = this.props;
     fetch('https://apis.is/concerts')
       .then(res => res.json())
-      .then(res => this.setState({ concerts: res.results }))
-      .then(this.setState({ gotData: true }))
+      .then(res => dispatch(fetchConcerts(res.results)))
       .catch((err) => {
         console.log(err);
       });
@@ -86,7 +86,7 @@ class HomeScreen extends React.Component {
   rightButtons = concert => [
     <TouchableOpacity style={styles.favoriteHighLight} onPress={() => {}}>
       <Text style={styles.delete}>Favorite</Text>
-    </TouchableOpacity>
+    </TouchableOpacity>,
   ];
 
   goToDetail = (concert) => {
@@ -114,9 +114,10 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    const { concerts, searchString } = this.state;
+    const { searchString } = this.state;
+    const { concerts } = this.props;
 
-    console.log(this.state);
+    console.log(this.props.concerts.results);
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
