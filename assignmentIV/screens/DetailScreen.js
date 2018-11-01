@@ -99,9 +99,7 @@ const DetailScreen = ({ navigation }) => (
       <View style={styles.rowStyle}>
         <Text>TÍMASETNING</Text>
         <Text style={styles.concertInfo}>
-          {moment(navigation.state.params.dateOfShow)
-            .locale('is')
-            .format('llll')}
+          {moment(navigation.state.params.dateOfShow).format('llll')}
         </Text>
       </View>
     </View>

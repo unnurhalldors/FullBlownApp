@@ -12,7 +12,10 @@ import {
 } from 'react-native';
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import { Icon } from 'expo';
 
+/* Action */
 import { fetchConcerts, updateConcert } from '../actions/concertActions';
 
 /* Components */
@@ -58,6 +61,9 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
   },
+  favoriteHighLight: {
+    marginTop: 10,
+  },
 });
 
 class HomeScreen extends React.Component {
@@ -91,7 +97,7 @@ class HomeScreen extends React.Component {
       )
       }
     >
-      <Text style={styles.delete}>Favorite</Text>
+      <Icon.FontAwesome name="heart-o" />
     </TouchableOpacity>,
   ];
 
@@ -105,11 +111,9 @@ class HomeScreen extends React.Component {
       <TouchableOpacity style={styles.concertContainer} onPress={() => this.goToDetail(item)}>
         <Image style={styles.image} source={{ uri: item.imageSource }} />
         <View style={styles.concertInfo}>
-          <Text>{item.name}</Text>
-          <Text>{new Date(item.dateOfShow).toLocaleString('is-IS')}</Text>
           <Text>{item.eventDateName}</Text>
           <Text>{item.eventHallName}</Text>
-          <Text>{item.userGroupName}</Text>
+          <Text>{moment(item.dateOfShow).format('llll')}</Text>
         </View>
       </TouchableOpacity>
     </Swipeable>
@@ -156,7 +160,7 @@ class HomeScreen extends React.Component {
             value={searchString}
           />
         </View>
-        <ScrollView contentContainerStyle={styles.listContainer}>
+        <ScrollView>
           <FlatList
             ListEmptyComponent={<ActivityIndicator size="large" />}
             data={this.filteredData(concerts)}
