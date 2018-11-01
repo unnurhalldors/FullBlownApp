@@ -11,6 +11,7 @@ import {
   FlatList,
 } from 'react-native';
 import Swipeable from 'react-native-swipeable';
+import { connect } from 'react-redux';
 
 /* Components */
 import Header from '../components/Header';
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -85,7 +86,7 @@ export default class HomeScreen extends React.Component {
   rightButtons = concert => [
     <TouchableOpacity style={styles.favoriteHighLight} onPress={() => {}}>
       <Text style={styles.delete}>Favorite</Text>
-    </TouchableOpacity>,
+    </TouchableOpacity>
   ];
 
   goToDetail = (concert) => {
@@ -141,3 +142,7 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({ concerts: state });
+
+export default connect(mapStateToProps)(HomeScreen);
