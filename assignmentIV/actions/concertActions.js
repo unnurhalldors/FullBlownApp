@@ -1,8 +1,11 @@
-import { UPDATE_CONCERT } from '../constants/concertConstants';
+import { UPDATE_CONCERT, FETCH_CONCERTS } from '../constants/concertConstants';
 
-const updateConcert = id => ({
+export const updateConcert = id => ({
   type: UPDATE_CONCERT,
   id,
 });
 
-export default updateConcert;
+export const fetchConcerts = data => ({
+  type: FETCH_CONCERTS,
+  data,
+});

@@ -11,6 +11,9 @@ import {
   FlatList,
 } from 'react-native';
 import Swipeable from 'react-native-swipeable';
+import { connect } from 'react-redux';
+
+import { fetchConcerts } from '../actions/concertActions';
 
 /* Components */
 import Header from '../components/Header';
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -66,17 +69,15 @@ export default class HomeScreen extends React.Component {
     super(props);
 
     this.state = {
-      concerts: null,
-      gotData: false,
       searchString: '',
     };
   }
 
   componentDidMount() {
+    const { dispatch } = this.props;
     fetch('https://apis.is/concerts')
       .then(res => res.json())
-      .then(res => this.setState({ concerts: res.results }))
-      .then(this.setState({ gotData: true }))
+      .then(res => dispatch(fetchConcerts(res.results)))
       .catch((err) => {
         console.log(err);
       });
@@ -113,9 +114,10 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
-    const { concerts, searchString } = this.state;
+    const { searchString } = this.state;
+    const { concerts } = this.props;
 
-    console.log(this.state);
+    console.log(this.props.concerts.results);
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
@@ -141,3 +143,7 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({ concerts: state });
+
+export default connect(mapStateToProps)(HomeScreen);
