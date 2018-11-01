@@ -16,12 +16,7 @@ const HomeStack = createStackNavigator({
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name="info-circle"
-    />
-  ),
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="info-circle" />,
 };
 
 const FavouriteStack = createStackNavigator({
@@ -30,8 +25,7 @@ const FavouriteStack = createStackNavigator({
 
 FavouriteStack.navigationOptions = {
   tabBarLabel: 'Favourites',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name="heart" />)
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="heart" />,
 };
 
 const MapStack = createStackNavigator({
@@ -49,12 +43,7 @@ const SettingsStack = createStackNavigator({
 
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name="gear"
-    />
-  ),
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="gear" />,
 };
 
 export default createBottomTabNavigator({

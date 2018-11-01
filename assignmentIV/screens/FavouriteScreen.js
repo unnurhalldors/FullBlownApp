@@ -9,8 +9,13 @@ import {
   Text,
 } from 'react-native';
 
-import moment from 'moment';
+import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
+import moment from 'moment';
+import { Icon } from 'expo';
+
+/* Actions */
+import { updateConcert } from '../actions/concertActions';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -53,6 +58,15 @@ const styles = StyleSheet.create({
     color: '#a8a6a6',
     fontSize: 13,
   },
+  favoriteHighLight: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: 70,
+    marginTop: 4,
+    marginBottom: 4,
+  },
 });
 
 class FavouriteScreen extends React.Component {
@@ -60,17 +74,36 @@ class FavouriteScreen extends React.Component {
     title: 'Favourites',
   };
 
+  rightButtons = concert => [
+    <TouchableOpacity
+      style={styles.favoriteHighLight}
+      onPress={() => this.props.dispatch(
+        updateConcert(concert.eventDateName, concert.dateOfShow, concert.favourited),
+      )
+      }
+    >
+      <Icon.FontAwesome size={20} name="heart-o" />
+    </TouchableOpacity>,
+  ];
+
+  goToDetail = (concert) => {
+    const { navigation } = this.props;
+    navigation.navigate('Detail', concert);
+  };
+
   renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.concertContainer}>
-      <View style={styles.imageView}>
-        <Image style={styles.image} source={{ uri: item.imageSource }} />
-      </View>
-      <View style={styles.concertInfo}>
-        <Text style={styles.header}>{item.eventDateName}</Text>
-        <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
-        <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
-      </View>
-    </TouchableOpacity>
+    <Swipeable rightButtons={this.rightButtons(item)}>
+      <TouchableOpacity style={styles.concertContainer} onPress={() => this.goToDetail(item)}>
+        <View style={styles.imageView}>
+          <Image style={styles.image} source={{ uri: item.imageSource }} />
+        </View>
+        <View style={styles.concertInfo}>
+          <Text style={styles.header}>{item.eventDateName}</Text>
+          <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
+          <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
+        </View>
+      </TouchableOpacity>
+    </Swipeable>
   );
 
   render() {

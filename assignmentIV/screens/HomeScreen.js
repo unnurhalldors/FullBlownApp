@@ -77,7 +77,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   favoriteHighLight: {
-    marginTop: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: 70,
+    marginTop: 4,
+    marginBottom: 4,
   },
 });
 
@@ -112,7 +118,7 @@ class HomeScreen extends React.Component {
       )
       }
     >
-      <Icon.FontAwesome name="heart-o" />
+      <Icon.FontAwesome size={20} name="heart-o" />
     </TouchableOpacity>,
   ];
 
