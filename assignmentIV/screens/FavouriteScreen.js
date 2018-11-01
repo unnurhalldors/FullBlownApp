@@ -9,6 +9,7 @@ import {
   Text,
 } from 'react-native';
 
+import moment from 'moment';
 import { connect } from 'react-redux';
 
 /* All Styles */
@@ -33,22 +34,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flex: 1,
   },
+  imageView: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1.2,
+  },
   image: {
-    height: 125,
-    width: 125,
+    height: 100,
+    width: 130,
   },
-  searchContainer: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#ccc',
-    width: '100%',
-    padding: 16,
+  header: {
+    color: 'rgb(47, 49, 51)',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
-  search: {
-    paddingLeft: 10,
-    fontSize: 18,
-    backgroundColor: '#f2f2f2',
-    height: 40,
-    borderRadius: 10,
+  info: {
+    color: '#a8a6a6',
+    fontSize: 13,
   },
 });
 
@@ -59,20 +62,19 @@ class FavouriteScreen extends React.Component {
 
   renderItem = ({ item }) => (
     <TouchableOpacity style={styles.concertContainer}>
-      <Image style={styles.image} source={{ uri: item.imageSource }} />
+      <View style={styles.imageView}>
+        <Image style={styles.image} source={{ uri: item.imageSource }} />
+      </View>
       <View style={styles.concertInfo}>
-        <Text>{item.name}</Text>
-        <Text>{new Date(item.dateOfShow).toLocaleString('is-IS')}</Text>
-        <Text>{item.eventDateName}</Text>
-        <Text>{item.eventHallName}</Text>
-        <Text>{item.userGroupName}</Text>
+        <Text style={styles.header}>{item.eventDateName}</Text>
+        <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
+        <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
       </View>
     </TouchableOpacity>
   );
 
   render() {
     const { concerts } = this.props;
-    console.log(concerts);
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <FlatList
