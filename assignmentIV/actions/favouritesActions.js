@@ -1,7 +1,7 @@
 import { ADD_FAVOURITE, REMOVE_FAVOURITE, FILL_FAVOURITES } from '../constants/favouriteConstants';
 import { storeFavourite } from '../services/asyncStorage';
 
-export const addFavourite = (eventDateName, dateOfShow) => dispatch => storeFavourite(eventDateName, dateOfShow).then((data) => {
+export const toggleFavourite = (eventDateName, dateOfShow) => dispatch => storeFavourite(eventDateName, dateOfShow).then((data) => {
   if (data) {
     dispatch({
       type: ADD_FAVOURITE,

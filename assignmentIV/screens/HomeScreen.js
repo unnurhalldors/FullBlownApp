@@ -10,11 +10,12 @@ import {
   View,
   FlatList,
 } from 'react-native';
+import { Icon } from 'expo';
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import _compact from 'lodash/compact';
 
-import { addFavourite } from '../actions/favouritesActions';
+import { toggleFavourite } from '../actions/favouritesActions';
 import { fetchConcerts } from '../actions/concertActions';
 /* Components */
 import Header from '../components/Header';
@@ -59,6 +60,15 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
   },
+  favoriteHighLight: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: 70,
+    marginTop: 4,
+    marginBottom: 4,
+  },
 });
 
 class HomeScreen extends React.Component {
@@ -89,10 +99,10 @@ class HomeScreen extends React.Component {
       style={styles.favoriteHighLight}
       onPress={() => {
         const { dispatch } = this.props;
-        dispatch(addFavourite(concert.eventDateName, concert.dateOfShow));
+        dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow));
       }}
     >
-      <Text style={styles.delete}>Favorite</Text>
+      <Icon.FontAwesome size={20} name="heart-o" />
     </TouchableOpacity>,
   ];
 

@@ -7,13 +7,17 @@ import {
   Image,
   View,
   Text,
+  AsyncStorage,
 } from 'react-native';
 
-import moment from 'moment';
+import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
-import { AsyncStorage } from 'react-native';
+import moment from 'moment';
+import { Icon } from 'expo';
 import { getAllFavourites } from '../services/asyncStorage';
-import { fillFavourites } from '../actions/favouritesActions';
+
+/* Actions */
+import { fillFavourites, toggleFavourite } from '../actions/favouritesActions';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -56,6 +60,15 @@ const styles = StyleSheet.create({
     color: '#a8a6a6',
     fontSize: 13,
   },
+  favoriteHighLight: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: 70,
+    marginTop: 4,
+    marginBottom: 4,
+  },
 });
 
 class FavouriteScreen extends React.Component {
@@ -63,27 +76,39 @@ class FavouriteScreen extends React.Component {
     title: 'Favourites',
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   componentWillMount() {
     const { dispatch } = this.props;
     getAllFavourites().then(favourites => dispatch(fillFavourites(favourites)));
   }
 
+  rightButtons = concert => [
+    <TouchableOpacity
+      style={styles.favoriteHighLight}
+      onPress={() => this.props.dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow))
+      }
+    >
+      <Icon.FontAwesome size={20} name="heart-o" />
+    </TouchableOpacity>,
+  ];
+
+  goToDetail = (concert) => {
+    const { navigation } = this.props;
+    navigation.navigate('Detail', concert);
+  };
+
   renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.concertContainer}>
-      <View style={styles.imageView}>
-        <Image style={styles.image} source={{ uri: item.imageSource }} />
-      </View>
-      <View style={styles.concertInfo}>
-        <Text style={styles.header}>{item.eventDateName}</Text>
-        <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
-        <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
-      </View>
-    </TouchableOpacity>
+    <Swipeable rightButtons={this.rightButtons(item)}>
+      <TouchableOpacity style={styles.concertContainer} onPress={() => this.goToDetail(item)}>
+        <View style={styles.imageView}>
+          <Image style={styles.image} source={{ uri: item.imageSource }} />
+        </View>
+        <View style={styles.concertInfo}>
+          <Text style={styles.header}>{item.eventDateName}</Text>
+          <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
+          <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
+        </View>
+      </TouchableOpacity>
+    </Swipeable>
   );
 
   filteredData = (data) => {
