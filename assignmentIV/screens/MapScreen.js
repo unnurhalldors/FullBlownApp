@@ -30,24 +30,8 @@ class MapScreen extends React.Component {
     title: 'Map',
   };
 
-  findLatLng = async (eventHall) => {
-    Geocoder.init('AIzaSyCBThq22FKZPvTf2hpZMxPqm8xecdhAlys');
-
-    const response = await Geocoder.from(eventHall);
-
-    // console.log(response.results[0].geometry.location);
-    const location = await response.results[0].geometry.location;
-
-    return {
-      latitude: location.lat,
-      longitude: location.lng,
-    };
-  };
-
   render() {
     const { concerts } = this.props;
-    const bla = this.findLatLng(concerts[3].eventHallName);
-    console.log(bla);
 
     return (
       <View style={styles.container}>
@@ -66,7 +50,10 @@ class MapScreen extends React.Component {
         >
           {concerts.map(concert => (
             <MapView.Marker
-              // coordinate={this.findLatLng(concert.eventHallName)}
+              coordinate={{
+                latitude: concert.coordinate._55.lat,
+                longitude: concert.coordinate._55.lng,
+              }}
               title={concert.eventDateName}
               description={concert.dateOfShow}
             />
