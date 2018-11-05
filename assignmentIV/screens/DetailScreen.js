@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, Image,
+  StyleSheet, Text, View, Image, TouchableOpacity, Button,
 } from 'react-native';
 import moment from 'moment';
 // import 'moment/src/locale/is';  VIRKAR EKKI

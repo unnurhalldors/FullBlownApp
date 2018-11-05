@@ -11,6 +11,9 @@ import {
 
 import moment from 'moment';
 import { connect } from 'react-redux';
+import { AsyncStorage } from 'react-native';
+import { getAllFavourites } from '../services/asyncStorage';
+import { fillFavourites } from '../actions/favouritesActions';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -60,6 +63,16 @@ class FavouriteScreen extends React.Component {
     title: 'Favourites',
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentWillMount() {
+    const { dispatch } = this.props;
+    getAllFavourites().then(favourites => dispatch(fillFavourites(favourites)));
+  }
+
   renderItem = ({ item }) => (
     <TouchableOpacity style={styles.concertContainer}>
       <View style={styles.imageView}>
@@ -73,12 +86,29 @@ class FavouriteScreen extends React.Component {
     </TouchableOpacity>
   );
 
-  render() {
+  filteredData = (data) => {
     const { concerts } = this.props;
+    const filtered = [];
+
+    data.forEach((favourited) => {
+      concerts.forEach((concert) => {
+        if (
+          favourited.dateOfShow === concert.dateOfShow
+          && favourited.eventDateName === concert.eventDateName
+        ) {
+          filtered.push(concert);
+        }
+      });
+    });
+    return filtered;
+  };
+
+  render() {
+    // AsyncStorage.clear();
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <FlatList
-          data={concerts.filter(x => x.favourited === true)}
+          data={this.filteredData(this.props.favourites)}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => index.toString()}
         />
@@ -87,6 +117,9 @@ class FavouriteScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ concerts: state });
+const mapStateToProps = ({ favouritesReducer, concertReducer }) => ({
+  favourites: favouritesReducer,
+  concerts: concertReducer,
+});
 
 export default connect(mapStateToProps)(FavouriteScreen);
