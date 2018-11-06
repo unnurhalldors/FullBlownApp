@@ -10,14 +10,17 @@ import {
   View,
   FlatList,
 } from 'react-native';
+
 import { Icon } from 'expo';
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import _compact from 'lodash/compact';
-
 import moment from 'moment';
-import { toggleFavourite } from '../actions/favouritesActions';
+
+/* Actions */
+import { toggleFavourite } from '../actions/favouriteActions';
 import fetchConcerts from '../actions/concertActions';
+
 /* Components */
 import Header from '../components/Header';
 import ListFooter from '../components/ListFooter';
@@ -103,7 +106,6 @@ class HomeScreen extends React.Component {
 
     this.state = {
       searchString: '',
-      favorited: false,
     };
   }
 
@@ -125,11 +127,7 @@ class HomeScreen extends React.Component {
         dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow));
       }}
     >
-      {!this.state.favorited ? (
-        <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
-      ) : (
-        <Icon.FontAwesome name="heart" size={20} color="#e04163" />
-      )}
+      <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
     </TouchableOpacity>,
   ];
 

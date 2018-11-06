@@ -6,7 +6,7 @@ import moment from 'moment';
 import 'moment/locale/is';
 import { Icon } from 'expo';
 import { connect } from 'react-redux';
-import { toggleFavourite } from '../actions/favouritesActions';
+import { toggleFavourite } from '../actions/favouriteActions';
 
 /* Setting moment locale to Icelandic */
 moment.locale('is');
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     textAlign: 'left',
-    paddingBottom: 20,
   },
   imageView: {
     shadowColor: '#000',
@@ -90,7 +89,6 @@ const styles = StyleSheet.create({
   },
 });
 class DetailScreen extends React.Component {
-  // const DetailScreen = ({ navigation }) => (
   render() {
     const { navigation } = this.props;
     return (

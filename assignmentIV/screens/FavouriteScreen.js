@@ -17,7 +17,7 @@ import { Icon } from 'expo';
 import { getAllFavourites } from '../services/asyncStorage';
 
 /* Actions */
-import { fillFavourites, toggleFavourite } from '../actions/favouritesActions';
+import { fillFavourites, toggleFavourite } from '../actions/favouriteActions';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -90,8 +90,10 @@ class FavouriteScreen extends React.Component {
   rightButtons = concert => [
     <TouchableOpacity
       style={styles.favoriteHighLight}
-      onPress={() => this.props.dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow))
-      }
+      onPress={() => {
+        const { dispatch } = this.props;
+        dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow));
+      }}
     >
       <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
     </TouchableOpacity>,
@@ -144,10 +146,11 @@ class FavouriteScreen extends React.Component {
 
   render() {
     // AsyncStorage.clear();
+    const { favourites } = this.props;
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <FlatList
-          data={this.filteredData(this.props.favourites)}
+          data={this.filteredData(favourites)}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => index.toString()}
         />

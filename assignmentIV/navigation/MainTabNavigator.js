@@ -1,5 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
@@ -16,7 +15,7 @@ const HomeStack = createStackNavigator({
 
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="info-circle" />,
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} size={26} name="info-circle" />,
 };
 
 const FavouriteStack = createStackNavigator({
@@ -25,7 +24,7 @@ const FavouriteStack = createStackNavigator({
 
 FavouriteStack.navigationOptions = {
   tabBarLabel: 'Favourites',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="heart" />,
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} size={23} name="heart" />,
 };
 
 const MapStack = createStackNavigator({
@@ -34,7 +33,7 @@ const MapStack = createStackNavigator({
 
 MapStack.navigationOptions = {
   tabBarLabel: 'Map',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="map-marker" />,
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} size={26} name="map-marker" />,
 };
 
 const SettingsStack = createStackNavigator({
@@ -43,7 +42,7 @@ const SettingsStack = createStackNavigator({
 
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="gear" />,
+  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} size={26} name="gear" />,
 };
 
 export default createBottomTabNavigator({

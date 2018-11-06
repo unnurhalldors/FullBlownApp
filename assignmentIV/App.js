@@ -10,12 +10,22 @@ import AppNavigator from './navigation/AppNavigator';
 /* Reducers */
 import reducers from './reducers/reducers';
 
+/* All styles */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
 });
+
+/* TODO */
+
+/* Ef ég fer úr favourites inn í details og svo til baka
+fer ég í homescreen en ekki favourites LAGA */
+/* Laga eslint villur í concertReducer */
+/* Laga eslint villur í homeScreen */
+/* Laga eslint villur í mapScreen */
+/* Setja eitthvað inn í SettingsScreen.js */
 
 export default class App extends React.Component {
   render() {

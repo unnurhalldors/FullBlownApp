@@ -1,1 +1,3 @@
-export const FETCH_CONCERTS = 'FETCH_CONCERTS';
+const FETCH_CONCERTS = 'FETCH_CONCERTS';
+
+export default FETCH_CONCERTS;

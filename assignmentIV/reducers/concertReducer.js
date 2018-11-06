@@ -1,11 +1,10 @@
 import Geocoder from 'react-native-geocoding';
-import { FETCH_CONCERTS } from '../constants/concertConstants';
+import FETCH_CONCERTS from '../constants/concertConstants';
 
 findLatLng = async (eventHall) => {
   Geocoder.init('AIzaSyCBThq22FKZPvTf2hpZMxPqm8xecdhAlys');
 
   const response = await Geocoder.from(eventHall);
-
   const location = await response.results[0].geometry.location;
 
   return location;
