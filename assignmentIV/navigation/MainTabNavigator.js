@@ -4,7 +4,6 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import FavouriteScreen from '../screens/FavouriteScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 import DetailScreen from '../screens/DetailScreen';
 import MapScreen from '../screens/MapScreen';
 
@@ -36,18 +35,8 @@ MapStack.navigationOptions = {
   tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} size={26} name="map-marker" />,
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
-});
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} size={26} name="gear" />,
-};
-
 export default createBottomTabNavigator({
   HomeStack,
   FavouriteStack,
   MapStack,
-  SettingsStack,
 });
