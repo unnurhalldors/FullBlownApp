@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, Image, TouchableOpacity,
+  StyleSheet, Text, View, Image, TouchableOpacity, Share,
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/is';
@@ -93,8 +93,70 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
 });
+
 class DetailScreen extends React.Component {
-  // const DetailScreen = ({ navigation }) => (
+  replaceAt = (string, index, replace) => string.substring(0, index) + replace + string.substring(index + 1);
+  
+  constructLink = (imgLink, name) => {
+    let link = 'https://midi.frettabladid.is/tonleikar/';
+    let nameTmp = name;
+
+    nameTmp = nameTmp.replace(/ó/g, 'o');
+    nameTmp = nameTmp.replace(/í/g, 'i');
+    nameTmp = nameTmp.replace(/á/g, 'a');
+    nameTmp = nameTmp.replace(/ð/g, 'd');
+    nameTmp = nameTmp.replace(/ö/g, 'o');
+    nameTmp = nameTmp.replace(/é/g, 'e');
+    nameTmp = nameTmp.replace(/ú/g, 'u');
+    nameTmp = nameTmp.replace(/ý/g, 'y');
+    nameTmp = nameTmp.replace(/æ/g, 'a');
+    nameTmp = nameTmp.replace(/þ/g, 't');
+
+    nameTmp = nameTmp.toLowerCase();
+
+    let indexOfDash = nameTmp.indexOf('-');
+
+    if (indexOfDash !== -1) {
+      nameTmp = this.replaceAt(nameTmp, indexOfDash - 1, '');
+      indexOfDash = nameTmp.indexOf('-');
+      nameTmp = this.replaceAt(nameTmp, indexOfDash + 1, '');
+    }
+
+    const whiteSpacesRemoved = nameTmp.replace(/ /g, '_');
+    const prefix = 'https://d30qys758zh01z.cloudfront.net/images/medium/';
+    const withoutPrefix = imgLink.slice(prefix.length, imgLink.length);
+    const dotSplit = withoutPrefix.split('.');
+    const constant = dotSplit[0];
+    const number = dotSplit[1];
+    link = `${link + constant}/${number}/${whiteSpacesRemoved}`;
+
+    return link;
+  };
+
+  onShare = async () => {
+    const { navigation } = this.props;
+    try {
+      const result = await Share.share({
+        message: this.constructLink(
+          navigation.state.params.imageSource,
+          navigation.state.params.eventDateName,
+        ),
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   render() {
     const { navigation } = this.props;
     return (
@@ -143,7 +205,7 @@ class DetailScreen extends React.Component {
             <Icon.FontAwesome name="heart" size={25} color="#e04163" />
             <Text style={styles.iconTextStyle}>Favourite</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconStyle}>
+          <TouchableOpacity style={styles.iconStyle} onPress={this.onShare}>
             <Icon.FontAwesome name="share" size={25} color="#2f95dc" />
             <Text style={styles.iconTextStyle}>Share</Text>
           </TouchableOpacity>

@@ -150,7 +150,6 @@ class HomeScreen extends React.Component {
   render() {
     const { searchString } = this.state;
     const { concerts } = this.props;
-
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
