@@ -26,6 +26,9 @@ fer ég í homescreen en ekki favourites LAGA */
 /* Laga eslint villur í homeScreen */
 /* Laga eslint villur í mapScreen */
 /* Setja eitthvað inn í SettingsScreen.js */
+/* Væri kúl að navigate-a yfir í réttan concert þegar ýtt er á hann á mappinu */
+/* fara yfir stíla - taka út það sem er ekki í notkun */
+/* uppfæra readme */
 
 export default class App extends React.Component {
   render() {
