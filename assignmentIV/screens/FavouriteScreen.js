@@ -69,6 +69,12 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginBottom: 4,
   },
+  rowStyle: {
+    flexDirection: 'row',
+  },
+  calendarIcon: {
+    paddingRight: 5,
+  },
 });
 
 class FavouriteScreen extends React.Component {
@@ -87,7 +93,7 @@ class FavouriteScreen extends React.Component {
       onPress={() => this.props.dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow))
       }
     >
-      <Icon.FontAwesome name="heart-o" size={20} color="black" />
+      <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
     </TouchableOpacity>,
   ];
 
@@ -105,7 +111,15 @@ class FavouriteScreen extends React.Component {
         <View style={styles.concertInfo}>
           <Text style={styles.header}>{item.eventDateName}</Text>
           <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
-          <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
+          <View style={styles.rowStyle}>
+            <Icon.FontAwesome
+              style={styles.calendarIcon}
+              name="calendar-check-o"
+              size={15}
+              color="#a8a6a6"
+            />
+            <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
+          </View>
         </View>
       </TouchableOpacity>
     </Swipeable>
