@@ -54,7 +54,7 @@ class MapScreen extends React.Component {
               }}
               title={concert.eventDateName}
               description={concert.eventHallName}
-              key={concert.dateOfShow}
+              key={`${concert.eventDateName}-${concert.dateOfShow}`}
             />
           ))}
         </MapView>
