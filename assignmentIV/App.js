@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import {
   Platform, StatusBar, StyleSheet, View,
@@ -10,12 +11,21 @@ import AppNavigator from './navigation/AppNavigator';
 /* Reducers */
 import reducers from './reducers/reducers';
 
+/* All styles */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
 });
+
+/* TODO */
+
+/* Ef ég fer úr favourites inn í details og svo til baka
+fer ég í homescreen en ekki favourites LAGA */
+/* Væri kúl að navigate-a yfir í réttan concert þegar ýtt er á hann á mappinu */
+/* fara yfir stíla - taka út það sem er ekki í notkun */
+/* uppfæra readme */
 
 export default class App extends React.Component {
   render() {

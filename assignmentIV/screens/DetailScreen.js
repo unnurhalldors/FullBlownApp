@@ -6,7 +6,7 @@ import moment from 'moment';
 import 'moment/locale/is';
 import { Icon } from 'expo';
 import { connect } from 'react-redux';
-import { toggleFavourite } from '../actions/favouritesActions';
+import { toggleFavourite } from '../actions/favouriteActions';
 
 /* Setting moment locale to Icelandic */
 moment.locale('is');
@@ -15,17 +15,18 @@ moment.locale('is');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'space-between',
     backgroundColor: '#fff',
-    padding: 30,
-    paddingBottom: 50,
+    padding: 16,
   },
   concertMainInfo: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
   },
   concertInfoContainer: {
-    flex: 2,
+    flex: 3,
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     backgroundColor: 'rgba(247,247,247,1.0)',
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     textAlign: 'left',
-    paddingBottom: 20,
   },
   imageView: {
     shadowColor: '#000',
@@ -69,16 +69,11 @@ const styles = StyleSheet.create({
     shadowRadius: 1.2,
   },
   image: {
-    width: 300,
+    width: 325,
     height: 210,
     marginBottom: 20,
   },
   rowStyle: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  iconView: {
-    flex: 1,
     flexDirection: 'row',
   },
   iconStyle: {
@@ -189,7 +184,7 @@ class DetailScreen extends React.Component {
             </Text>
           </View>
         </View>
-        <View style={styles.iconView}>
+        <View style={styles.rowStyle}>
           <TouchableOpacity
             style={styles.iconStyle}
             onPress={() => {
@@ -202,7 +197,7 @@ class DetailScreen extends React.Component {
               );
             }}
           >
-            <Icon.FontAwesome name="heart" size={25} color="#e04163" />
+            <Icon.FontAwesome name="heart-o" size={25} color="#a8a6a6" />
             <Text style={styles.iconTextStyle}>Favourite</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconStyle} onPress={this.onShare}>

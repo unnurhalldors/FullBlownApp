@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import {
   ActivityIndicator,
@@ -10,13 +11,17 @@ import {
   View,
   FlatList,
 } from 'react-native';
+
 import { Icon } from 'expo';
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import _compact from 'lodash/compact';
+import moment from 'moment';
 
-import { toggleFavourite } from '../actions/favouritesActions';
+/* Actions */
+import { toggleFavourite } from '../actions/favouriteActions';
 import fetchConcerts from '../actions/concertActions';
+
 /* Components */
 import Header from '../components/Header';
 import ListFooter from '../components/ListFooter';
@@ -35,17 +40,41 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(247,247,247,1.0)',
     marginLeft: 16,
-    paddingBottom: 10,
-    paddingTop: 10,
+    paddingBottom: 20,
+    paddingTop: 20,
   },
   concertInfo: {
     paddingLeft: 8,
     justifyContent: 'space-around',
     flex: 1,
   },
+  imageView: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1.2,
+  },
   image: {
-    height: 125,
-    width: 125,
+    height: 100,
+    width: 130,
+  },
+  header: {
+    color: 'rgb(47, 49, 51)',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  info: {
+    color: '#a8a6a6',
+    fontSize: 13,
+  },
+  favoriteHighLight: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: 70,
+    marginTop: 4,
+    marginBottom: 4,
   },
   searchContainer: {
     borderBottomWidth: 0.5,
@@ -60,14 +89,11 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
   },
-  favoriteHighLight: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    width: 70,
-    marginTop: 4,
-    marginBottom: 4,
+  rowStyle: {
+    flexDirection: 'row',
+  },
+  calendarIcon: {
+    paddingRight: 5,
   },
 });
 
@@ -81,7 +107,6 @@ class HomeScreen extends React.Component {
 
     this.state = {
       searchString: '',
-      favorited: false,
     };
   }
 
@@ -89,10 +114,7 @@ class HomeScreen extends React.Component {
     const { dispatch } = this.props;
     fetch('https://apis.is/concerts')
       .then(res => res.json())
-      .then(res => dispatch(fetchConcerts(res.results)))
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(res => dispatch(fetchConcerts(res.results)));
   }
 
   rightButtons = concert => [
@@ -103,11 +125,7 @@ class HomeScreen extends React.Component {
         dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow));
       }}
     >
-      {!this.state.favorited ? (
-        <Icon.FontAwesome name="heart-o" size={20} color="black" />
-      ) : (
-        <Icon.FontAwesome name="heart" size={20} color="#e04163" />
-      )}
+      <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
     </TouchableOpacity>,
   ];
 
@@ -119,13 +137,21 @@ class HomeScreen extends React.Component {
   renderItem = ({ item }) => (
     <Swipeable rightButtons={this.rightButtons(item)}>
       <TouchableOpacity style={styles.concertContainer} onPress={() => this.goToDetail(item)}>
-        <Image style={styles.image} source={{ uri: item.imageSource }} />
+        <View style={styles.imageView}>
+          <Image style={styles.image} source={{ uri: item.imageSource }} />
+        </View>
         <View style={styles.concertInfo}>
-          <Text>{item.name}</Text>
-          <Text>{new Date(item.dateOfShow).toLocaleString('is-IS')}</Text>
-          <Text>{item.eventDateName}</Text>
-          <Text>{item.eventHallName}</Text>
-          <Text>{item.userGroupName}</Text>
+          <Text style={styles.header}>{item.eventDateName}</Text>
+          <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
+          <View style={styles.rowStyle}>
+            <Icon.FontAwesome
+              style={styles.calendarIcon}
+              name="calendar-check-o"
+              size={15}
+              color="#a8a6a6"
+            />
+            <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
+          </View>
         </View>
       </TouchableOpacity>
     </Swipeable>
@@ -140,8 +166,9 @@ class HomeScreen extends React.Component {
 
     if (searchString !== '') {
       return concerts.filter(
-        item => _compact(Object.values(item).map(value => value.toString().indexOf(searchString) !== -1))
-          .length > 0,
+        item => _compact(Object.values(item)
+          .map(value => value.toString()
+            .indexOf(searchString) !== -1)).length > 0,
       );
     }
     return concerts;

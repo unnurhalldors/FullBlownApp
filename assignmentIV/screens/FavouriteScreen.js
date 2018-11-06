@@ -17,7 +17,7 @@ import { Icon } from 'expo';
 import { getAllFavourites } from '../services/asyncStorage';
 
 /* Actions */
-import { fillFavourites, toggleFavourite } from '../actions/favouritesActions';
+import { fillFavourites, toggleFavourite } from '../actions/favouriteActions';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(247,247,247,1.0)',
     marginLeft: 16,
-    paddingBottom: 10,
-    paddingTop: 10,
+    paddingBottom: 20,
+    paddingTop: 20,
   },
   concertInfo: {
     paddingLeft: 8,
@@ -69,6 +69,12 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginBottom: 4,
   },
+  rowStyle: {
+    flexDirection: 'row',
+  },
+  calendarIcon: {
+    paddingRight: 5,
+  },
 });
 
 class FavouriteScreen extends React.Component {
@@ -84,10 +90,12 @@ class FavouriteScreen extends React.Component {
   rightButtons = concert => [
     <TouchableOpacity
       style={styles.favoriteHighLight}
-      onPress={() => this.props.dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow))
-      }
+      onPress={() => {
+        const { dispatch } = this.props;
+        dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow));
+      }}
     >
-      <Icon.FontAwesome name="heart-o" size={20} color="black" />
+      <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
     </TouchableOpacity>,
   ];
 
@@ -105,7 +113,15 @@ class FavouriteScreen extends React.Component {
         <View style={styles.concertInfo}>
           <Text style={styles.header}>{item.eventDateName}</Text>
           <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
-          <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
+          <View style={styles.rowStyle}>
+            <Icon.FontAwesome
+              style={styles.calendarIcon}
+              name="calendar-check-o"
+              size={15}
+              color="#a8a6a6"
+            />
+            <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
+          </View>
         </View>
       </TouchableOpacity>
     </Swipeable>
@@ -130,10 +146,11 @@ class FavouriteScreen extends React.Component {
 
   render() {
     // AsyncStorage.clear();
+    const { favourites } = this.props;
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <FlatList
-          data={this.filteredData(this.props.favourites)}
+          data={this.filteredData(favourites)}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => index.toString()}
         />
