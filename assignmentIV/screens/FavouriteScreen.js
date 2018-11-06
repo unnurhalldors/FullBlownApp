@@ -7,15 +7,17 @@ import {
   Image,
   View,
   Text,
+  AsyncStorage,
 } from 'react-native';
 
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { Icon } from 'expo';
+import { getAllFavourites } from '../services/asyncStorage';
 
 /* Actions */
-import { updateConcert } from '../actions/concertActions';
+import { fillFavourites, toggleFavourite } from '../actions/favouritesActions';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -74,15 +76,18 @@ class FavouriteScreen extends React.Component {
     title: 'Favourites',
   };
 
+  componentWillMount() {
+    const { dispatch } = this.props;
+    getAllFavourites().then(favourites => dispatch(fillFavourites(favourites)));
+  }
+
   rightButtons = concert => [
     <TouchableOpacity
       style={styles.favoriteHighLight}
-      onPress={() => this.props.dispatch(
-        updateConcert(concert.eventDateName, concert.dateOfShow, concert.favourited),
-      )
+      onPress={() => this.props.dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow))
       }
     >
-      <Icon.FontAwesome name="heart-o" size={20} color="pink" />
+      <Icon.FontAwesome name="heart-o" size={20} color="black" />
     </TouchableOpacity>,
   ];
 
@@ -106,12 +111,29 @@ class FavouriteScreen extends React.Component {
     </Swipeable>
   );
 
-  render() {
+  filteredData = (data) => {
     const { concerts } = this.props;
+    const filtered = [];
+
+    data.forEach((favourited) => {
+      concerts.forEach((concert) => {
+        if (
+          favourited.dateOfShow === concert.dateOfShow
+          && favourited.eventDateName === concert.eventDateName
+        ) {
+          filtered.push(concert);
+        }
+      });
+    });
+    return filtered;
+  };
+
+  render() {
+    // AsyncStorage.clear();
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <FlatList
-          data={concerts.filter(x => x.favourited === true)}
+          data={this.filteredData(this.props.favourites)}
           renderItem={this.renderItem}
           keyExtractor={(item, index) => index.toString()}
         />
@@ -120,6 +142,9 @@ class FavouriteScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ concerts: state });
+const mapStateToProps = ({ favouritesReducer, concertReducer }) => ({
+  favourites: favouritesReducer,
+  concerts: concertReducer,
+});
 
 export default connect(mapStateToProps)(FavouriteScreen);

@@ -1,16 +1,8 @@
-import { FETCH_CONCERTS, UPDATE_CONCERT } from '../constants/concertConstants';
-import { storeFavourite } from '../services/asyncStorage';
+import { FETCH_CONCERTS } from '../constants/concertConstants';
 
-export const fetchConcerts = data => ({
+const fetchConcerts = data => ({
   type: FETCH_CONCERTS,
   data,
 });
 
-export const updateConcert = (eventDateName, dateOfShow) => {
-  storeFavourite(eventDateName, dateOfShow);
-  return {
-    type: UPDATE_CONCERT,
-    eventDateName,
-    dateOfShow,
-  };
-};
+export default fetchConcerts;

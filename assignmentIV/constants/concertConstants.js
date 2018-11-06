@@ -1,2 +1,1 @@
 export const FETCH_CONCERTS = 'FETCH_CONCERTS';
-export const UPDATE_CONCERT = 'UPDATE_CONCERT';

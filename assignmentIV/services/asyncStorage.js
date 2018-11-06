@@ -4,16 +4,22 @@ const storageKey = 'Concert';
 
 export const storeFavourite = async (eventDateName, dateOfShow) => {
   try {
-    await AsyncStorage.setItem(
-      `@${storageKey}:${eventDateName}:${dateOfShow}`,
-      JSON.stringify({
-        eventDateName,
-        dateOfShow,
-      }),
-    );
+    if ((await AsyncStorage.getItem(`@${storageKey}:${eventDateName}:${dateOfShow}`)) == null) {
+      await AsyncStorage.setItem(
+        `@${storageKey}:${eventDateName}:${dateOfShow}`,
+        JSON.stringify({
+          eventDateName,
+          dateOfShow,
+        }),
+      );
+      return true;
+    }
+    await AsyncStorage.removeItem(`@${storageKey}:${eventDateName}:${dateOfShow}`);
+    return false;
   } catch (error) {
     alert(error);
   }
+  return false;
 };
 
 export const getAllFavourites = async () => {

@@ -10,14 +10,13 @@ import {
   View,
   FlatList,
 } from 'react-native';
+import { Icon } from 'expo';
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
-import moment from 'moment';
-import { Icon } from 'expo';
+import _compact from 'lodash/compact';
 
-/* Action */
-import { fetchConcerts, updateConcert } from '../actions/concertActions';
-
+import { toggleFavourite } from '../actions/favouritesActions';
+import fetchConcerts from '../actions/concertActions';
 /* Components */
 import Header from '../components/Header';
 import ListFooter from '../components/ListFooter';
@@ -44,24 +43,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flex: 1,
   },
-  imageView: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 1.2,
-  },
   image: {
-    height: 100,
-    width: 130,
-  },
-  header: {
-    color: 'rgb(47, 49, 51)',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  info: {
-    color: '#a8a6a6',
-    fontSize: 13,
+    height: 125,
+    width: 125,
   },
   searchContainer: {
     borderBottomWidth: 0.5,
@@ -114,10 +98,13 @@ class HomeScreen extends React.Component {
   rightButtons = concert => [
     <TouchableOpacity
       style={styles.favoriteHighLight}
-      onPress={() => this.props.dispatch(updateConcert(concert.eventDateName, concert.dateOfShow))}
+      onPress={() => {
+        const { dispatch } = this.props;
+        dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow));
+      }}
     >
       {!this.state.favorited ? (
-        <Icon.FontAwesome name="heart-o" size={25} color="black" />
+        <Icon.FontAwesome name="heart-o" size={20} color="black" />
       ) : (
         <Icon.FontAwesome name="heart" size={20} color="#e04163" />
       )}
@@ -132,13 +119,13 @@ class HomeScreen extends React.Component {
   renderItem = ({ item }) => (
     <Swipeable rightButtons={this.rightButtons(item)}>
       <TouchableOpacity style={styles.concertContainer} onPress={() => this.goToDetail(item)}>
-        <View style={styles.imageView}>
-          <Image style={styles.image} source={{ uri: item.imageSource }} />
-        </View>
+        <Image style={styles.image} source={{ uri: item.imageSource }} />
         <View style={styles.concertInfo}>
-          <Text style={styles.header}>{item.eventDateName}</Text>
-          <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
-          <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
+          <Text>{item.name}</Text>
+          <Text>{new Date(item.dateOfShow).toLocaleString('is-IS')}</Text>
+          <Text>{item.eventDateName}</Text>
+          <Text>{item.eventHallName}</Text>
+          <Text>{item.userGroupName}</Text>
         </View>
       </TouchableOpacity>
     </Swipeable>
@@ -149,22 +136,13 @@ class HomeScreen extends React.Component {
   };
 
   filteredData = (concerts) => {
-    const results = [];
     const { searchString } = this.state;
 
     if (searchString !== '') {
-      for (let i = 0; i < concerts.length; i++) {
-        for (key in concerts[i]) {
-          if (typeof concerts[i][key] === 'string') {
-            if (concerts[i][key].indexOf(searchString) != -1) {
-              if (!results.includes(concerts[i])) {
-                results.push(concerts[i]);
-              }
-            }
-          }
-        }
-      }
-      return results;
+      return concerts.filter(
+        item => _compact(Object.values(item).map(value => value.toString().indexOf(searchString) !== -1))
+          .length > 0,
+      );
     }
     return concerts;
   };
@@ -185,7 +163,7 @@ class HomeScreen extends React.Component {
             value={searchString}
           />
         </View>
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.listContainer}>
           <FlatList
             ListEmptyComponent={<ActivityIndicator size="large" />}
             data={this.filteredData(concerts)}
@@ -199,6 +177,6 @@ class HomeScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ concerts: state });
+const mapStateToProps = ({ concertReducer }) => ({ concerts: concertReducer });
 
 export default connect(mapStateToProps)(HomeScreen);

@@ -1,7 +1,8 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { connect } from 'react-redux';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,12 +23,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class MapScreen extends React.Component {
+class MapScreen extends React.Component {
   static navigationOptions = {
     title: 'Map',
   };
 
   render() {
+    const { concerts } = this.props;
+
     return (
       <View style={styles.container}>
         <MapView
@@ -42,8 +45,24 @@ export default class MapScreen extends React.Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-        />
+        >
+          {concerts.map(concert => (
+            <MapView.Marker
+              coordinate={{
+                latitude: concert.coordinate._55.lat,
+                longitude: concert.coordinate._55.lng,
+              }}
+              title={concert.eventDateName}
+              description={concert.eventHallName}
+              key={`${concert.eventDateName}-${concert.dateOfShow}`}
+            />
+          ))}
+        </MapView>
       </View>
     );
   }
 }
+
+const mapStateToProps = ({ concertReducer }) => ({ concerts: concertReducer });
+
+export default connect(mapStateToProps)(MapScreen);

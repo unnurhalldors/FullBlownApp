@@ -3,11 +3,12 @@ import {
   Platform, StatusBar, StyleSheet, View,
 } from 'react-native';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import AppNavigator from './navigation/AppNavigator';
 
 /* Reducers */
-import concertReducer from './reducers/concertReducer';
+import reducers from './reducers/reducers';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={createStore(concertReducer)}>
+      <Provider store={createStore(reducers, applyMiddleware(thunk))}>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <AppNavigator />
