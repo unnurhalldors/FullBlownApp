@@ -1,11 +1,15 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, Image,
+  StyleSheet, Text, View, Image, TouchableOpacity,
 } from 'react-native';
 import moment from 'moment';
-// import 'moment/src/locale/is';  VIRKAR EKKI
+import 'moment/locale/is';
+import { Icon } from 'expo';
 
-// Styles
+/* Setting moment locale to Icelandic */
+moment.locale('is');
+
+/* All Styles */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -19,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   concertInfoContainer: {
-    flex: 1,
+    flex: 2,
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     backgroundColor: 'rgba(247,247,247,1.0)',
@@ -71,6 +75,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
+  iconView: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  iconStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+  },
+  iconTextStyle: {
+    color: '#a8a6a6',
+    fontWeight: 'bold',
+    fontSize: 14,
+    paddingLeft: 5,
+  },
 });
 
 const DetailScreen = ({ navigation }) => (
@@ -102,6 +121,16 @@ const DetailScreen = ({ navigation }) => (
           {moment(navigation.state.params.dateOfShow).format('llll')}
         </Text>
       </View>
+    </View>
+    <View style={styles.iconView}>
+      <TouchableOpacity style={styles.iconStyle}>
+        <Icon.FontAwesome name="heart" size={25} color="#e04163" />
+        <Text style={styles.iconTextStyle}>Favourite</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.iconStyle}>
+        <Icon.FontAwesome name="share" size={25} color="#2f95dc" />
+        <Text style={styles.iconTextStyle}>Share</Text>
+      </TouchableOpacity>
     </View>
   </View>
 );

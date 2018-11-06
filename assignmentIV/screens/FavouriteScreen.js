@@ -82,7 +82,7 @@ class FavouriteScreen extends React.Component {
       )
       }
     >
-      <Icon.FontAwesome size={20} name="heart-o" />
+      <Icon.FontAwesome name="heart-o" size={20} color="pink" />
     </TouchableOpacity>,
   ];
 

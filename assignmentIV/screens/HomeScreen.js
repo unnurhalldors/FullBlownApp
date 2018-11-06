@@ -97,6 +97,7 @@ class HomeScreen extends React.Component {
 
     this.state = {
       searchString: '',
+      favorited: false,
     };
   }
 
@@ -113,12 +114,13 @@ class HomeScreen extends React.Component {
   rightButtons = concert => [
     <TouchableOpacity
       style={styles.favoriteHighLight}
-      onPress={() => this.props.dispatch(
-        updateConcert(concert.eventDateName, concert.dateOfShow, concert.favourited),
-      )
-      }
+      onPress={() => this.props.dispatch(updateConcert(concert.eventDateName, concert.dateOfShow))}
     >
-      <Icon.FontAwesome size={20} name="heart-o" />
+      {!this.state.favorited ? (
+        <Icon.FontAwesome name="heart-o" size={25} color="black" />
+      ) : (
+        <Icon.FontAwesome name="heart" size={20} color="#e04163" />
+      )}
     </TouchableOpacity>,
   ];
 
