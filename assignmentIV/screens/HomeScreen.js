@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import {
   ActivityIndicator,
@@ -113,10 +114,7 @@ class HomeScreen extends React.Component {
     const { dispatch } = this.props;
     fetch('https://apis.is/concerts')
       .then(res => res.json())
-      .then(res => dispatch(fetchConcerts(res.results)))
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(res => dispatch(fetchConcerts(res.results)));
   }
 
   rightButtons = concert => [
@@ -168,8 +166,9 @@ class HomeScreen extends React.Component {
 
     if (searchString !== '') {
       return concerts.filter(
-        item => _compact(Object.values(item).map(value => value.toString().indexOf(searchString) !== -1))
-          .length > 0,
+        item => _compact(Object.values(item)
+          .map(value => value.toString()
+            .indexOf(searchString) !== -1)).length > 0,
       );
     }
     return concerts;

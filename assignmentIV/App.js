@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import {
   Platform, StatusBar, StyleSheet, View,
@@ -22,9 +23,6 @@ const styles = StyleSheet.create({
 
 /* Ef ég fer úr favourites inn í details og svo til baka
 fer ég í homescreen en ekki favourites LAGA */
-/* Laga eslint villur í concertReducer */
-/* Laga eslint villur í homeScreen */
-/* Laga eslint villur í mapScreen */
 /* Væri kúl að navigate-a yfir í réttan concert þegar ýtt er á hann á mappinu */
 /* fara yfir stíla - taka út það sem er ekki í notkun */
 /* uppfæra readme */
