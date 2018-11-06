@@ -5,6 +5,8 @@ import {
 import moment from 'moment';
 import 'moment/locale/is';
 import { Icon } from 'expo';
+import { connect } from 'react-redux';
+import { toggleFavourite } from '../actions/favouritesActions';
 
 /* Setting moment locale to Icelandic */
 moment.locale('is');
@@ -91,48 +93,64 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
 });
+class DetailScreen extends React.Component {
+  // const DetailScreen = ({ navigation }) => (
+  render() {
+    const { navigation } = this.props;
+    return (
+      <View style={styles.container}>
+        <View style={styles.imageView}>
+          <Image style={styles.image} source={{ uri: navigation.state.params.imageSource }} />
+        </View>
+        <View style={styles.concertMainInfo}>
+          <Text style={styles.headerText}>{navigation.state.params.eventDateName}</Text>
+          <Text style={styles.concertType}>{navigation.state.params.name.toUpperCase()}</Text>
+        </View>
+        <View style={styles.concertInfoContainer}>
+          <Text style={styles.detailText}>Um viðburðinn</Text>
+          <View style={styles.rowStyle}>
+            <Text>UMSJÓN</Text>
+            <Text style={styles.concertInfo}>
+              {navigation.state.params.userGroupName.toUpperCase()}
+            </Text>
+          </View>
+          <View style={styles.rowStyle}>
+            <Text>STAÐSETNING</Text>
+            <Text style={styles.concertInfo}>
+              {navigation.state.params.eventHallName.toUpperCase()}
+            </Text>
+          </View>
+          <View style={styles.rowStyle}>
+            <Text>TÍMASETNING</Text>
+            <Text style={styles.concertInfo}>
+              {moment(navigation.state.params.dateOfShow).format('llll')}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.iconView}>
+          <TouchableOpacity
+            style={styles.iconStyle}
+            onPress={() => {
+              const { dispatch } = this.props;
+              dispatch(
+                toggleFavourite(
+                  navigation.state.params.eventDateName,
+                  navigation.state.params.dateOfShow,
+                ),
+              );
+            }}
+          >
+            <Icon.FontAwesome name="heart" size={25} color="#e04163" />
+            <Text style={styles.iconTextStyle}>Favourite</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconStyle}>
+            <Icon.FontAwesome name="share" size={25} color="#2f95dc" />
+            <Text style={styles.iconTextStyle}>Share</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
 
-const DetailScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <View style={styles.imageView}>
-      <Image style={styles.image} source={{ uri: navigation.state.params.imageSource }} />
-    </View>
-    <View style={styles.concertMainInfo}>
-      <Text style={styles.headerText}>{navigation.state.params.eventDateName}</Text>
-      <Text style={styles.concertType}>{navigation.state.params.name.toUpperCase()}</Text>
-    </View>
-    <View style={styles.concertInfoContainer}>
-      <Text style={styles.detailText}>Um viðburðinn</Text>
-      <View style={styles.rowStyle}>
-        <Text>UMSJÓN</Text>
-        <Text style={styles.concertInfo}>
-          {navigation.state.params.userGroupName.toUpperCase()}
-        </Text>
-      </View>
-      <View style={styles.rowStyle}>
-        <Text>STAÐSETNING</Text>
-        <Text style={styles.concertInfo}>
-          {navigation.state.params.eventHallName.toUpperCase()}
-        </Text>
-      </View>
-      <View style={styles.rowStyle}>
-        <Text>TÍMASETNING</Text>
-        <Text style={styles.concertInfo}>
-          {moment(navigation.state.params.dateOfShow).format('llll')}
-        </Text>
-      </View>
-    </View>
-    <View style={styles.iconView}>
-      <TouchableOpacity style={styles.iconStyle}>
-        <Icon.FontAwesome name="heart" size={25} color="#e04163" />
-        <Text style={styles.iconTextStyle}>Favourite</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.iconStyle}>
-        <Icon.FontAwesome name="share" size={25} color="#2f95dc" />
-        <Text style={styles.iconTextStyle}>Share</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-);
-
-export default DetailScreen;
+export default connect()(DetailScreen);
