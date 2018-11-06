@@ -2,9 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { Marker } from 'react-native-maps';
 import { connect } from 'react-redux';
-import Geocoder from 'react-native-geocoding';
 
 const styles = StyleSheet.create({
   container: {
@@ -55,7 +53,8 @@ class MapScreen extends React.Component {
                 longitude: concert.coordinate._55.lng,
               }}
               title={concert.eventDateName}
-              description={concert.dateOfShow}
+              description={concert.eventHallName}
+              key={concert.dateOfShow}
             />
           ))}
         </MapView>
