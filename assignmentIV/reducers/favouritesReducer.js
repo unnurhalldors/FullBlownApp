@@ -13,9 +13,12 @@ const concertReducer = (state = [], action) => {
     case FILL_FAVOURITES:
       return action.data.map(item => JSON.parse(item[1]));
     case REMOVE_FAVOURITE:
-      return state.filter(
-        elem => elem.dateOfShow !== action.dateOfShow && elem.eventDateName !== action.eventDateName,
-      );
+      return state.filter((elem) => {
+        if (elem.dateOfShow === action.dateOfShow && elem.eventDateName === action.eventDateName) {
+          return false;
+        }
+        return true;
+      });
     default:
       return state;
   }
