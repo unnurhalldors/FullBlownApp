@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(247,247,247,1.0)',
     marginLeft: 16,
-    paddingBottom: 10,
-    paddingTop: 10,
+    paddingBottom: 20,
+    paddingTop: 20,
   },
   concertInfo: {
     paddingLeft: 8,
