@@ -1,4 +1,4 @@
-import { FILL_FAVOURITES, ADD_FAVOURITE, REMOVE_FAVOURITE } from '../constants/favouriteConstants';
+import { ADD_FAVOURITE, REMOVE_FAVOURITE, FILL_FAVOURITES } from '../constants/favouriteConstants';
 
 const concertReducer = (state = [], action) => {
   switch (action.type) {
@@ -10,8 +10,6 @@ const concertReducer = (state = [], action) => {
           eventDateName: action.eventDateName,
         },
       ];
-    case FILL_FAVOURITES:
-      return action.data.map(item => JSON.parse(item[1]));
     case REMOVE_FAVOURITE:
       return state.filter((elem) => {
         if (elem.dateOfShow === action.dateOfShow && elem.eventDateName === action.eventDateName) {
@@ -19,6 +17,8 @@ const concertReducer = (state = [], action) => {
         }
         return true;
       });
+    case FILL_FAVOURITES:
+      return action.data.map(item => JSON.parse(item[1]));
     default:
       return state;
   }

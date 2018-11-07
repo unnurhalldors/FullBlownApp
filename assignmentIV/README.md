@@ -4,7 +4,7 @@
 
 #### Teachers: Bragi Bergþórsson & Ragnar Adolf Árnason
 
-##### Eva Sif Einarsdóttir, Hreiðar Kristinn Hreiðarsson, Ísabella Ýr Finnsdóttir and Unnur Lára Halldórsdóttir
+##### Eva Sif Einarsdóttir, Hreiðar Kristinn Hreiðarsson, Ísabella Ýr Finnsdóttir & Unnur Lára Halldórsdóttir
 
 ![HR logo](http://www.ru.is/media/HR_logo_vinstri_transparent.png)
 
@@ -15,11 +15,13 @@
 - Search for a specific concert
 - See the location of each concert on a map
 - See details on each concert where you can share the concert to _Facebook_ and also favourite/unfavourite
+- Includes local storage so your favourites will still be in place when you open the app again!
 
 ### What you need
 
 - Expo client `npm install -g expo-cli`
-- Expo mobile app
+- Expo mobile app/iOS simulator
+- Note that the device used for developing was **iPhone 8 Plus**
 
 ### How to run the app
 
@@ -38,3 +40,4 @@
 
 - Team-members used GitHub and Git to host and manage the code
 - Team-members used the .eslintrc.json that was provided for Assignment I
+- Team-members decided that all tab titles, headers and such should be in English - but concert titles, locations and dates in Icelandic.

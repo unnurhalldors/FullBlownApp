@@ -19,6 +19,7 @@ HomeStack.navigationOptions = {
 
 const FavouriteStack = createStackNavigator({
   Favourites: FavouriteScreen,
+  Detail: DetailScreen,
 });
 
 FavouriteStack.navigationOptions = {

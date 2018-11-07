@@ -91,6 +91,10 @@ const styles = StyleSheet.create({
 });
 
 class DetailScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Details',
+  };
+
   onShare = async () => {
     const { navigation } = this.props;
     try {

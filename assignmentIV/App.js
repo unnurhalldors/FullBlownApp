@@ -21,10 +21,8 @@ const styles = StyleSheet.create({
 
 /* TODO */
 
-/* Ef ég fer úr favourites inn í details og svo til baka
-fer ég í homescreen en ekki favourites LAGA */
 /* fara yfir stíla - taka út það sem er ekki í notkun */
-/* uppfæra readme */
+/* renna yfir readme í lokin - uppfæra ef eitthvað hefur breyst! */
 /* Laga favourites hjarta - gera það rautt þegar concert er favourite-aður */
 
 export default class App extends React.Component {

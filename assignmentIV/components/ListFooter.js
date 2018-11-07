@@ -13,14 +13,12 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: 'rgb(47, 49, 51)',
-    fontFamily: 'Arial',
     fontWeight: 'bold',
     fontSize: 18,
     textAlign: 'center',
   },
   footerTextTwo: {
     color: 'black',
-    fontFamily: 'Verdana',
     fontSize: 12,
     textAlign: 'center',
   },

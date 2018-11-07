@@ -1,4 +1,5 @@
 /* eslint-disable import/no-unresolved */
+/* eslint-disable max-len */
 import React from 'react';
 import {
   ActivityIndicator,
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
+    title: 'Home',
     header: null,
   };
 

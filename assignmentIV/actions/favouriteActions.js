@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { ADD_FAVOURITE, REMOVE_FAVOURITE, FILL_FAVOURITES } from '../constants/favouriteConstants';
 import { storeFavourite } from '../services/asyncStorage';
 

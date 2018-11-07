@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export const replaceAt = (string, index, replace) => string.substring(0, index) + replace + string.substring(index + 1);
 
 export const constructLink = (imgLink, name) => {
