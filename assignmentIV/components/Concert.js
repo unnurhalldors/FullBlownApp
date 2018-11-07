@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
     width: 130,
   },
   header: {
-    color: 'rgb(47, 49, 51)',
+    color: 'rgb(60, 60, 60)',
     fontWeight: 'bold',
     fontSize: 16,
   },
   info: {
-    color: '#a8a6a6',
+    color: '#a4a2a2',
     fontSize: 13,
   },
   rowStyle: {
@@ -68,7 +68,11 @@ class Concert extends React.Component {
               size={15}
               color="#a8a6a6"
             />
-            <Text style={styles.info}>{moment(concert.dateOfShow).format('llll')}</Text>
+            <Text style={styles.info}>
+              {moment(concert.dateOfShow)
+                .format('llll')
+                .toUpperCase()}
+            </Text>
           </View>
         </View>
       </View>

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    color: 'rgb(47, 49, 51)',
+    color: 'rgb(60, 60, 60)',
     fontWeight: 'bold',
     fontSize: 24,
     textAlign: 'center',
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   concertInfoHeader: {
-    color: 'rgb(55, 55, 55)',
+    color: 'rgb(60, 60, 60)',
   },
   concertInfo: {
     color: '#2f95dc',
@@ -116,8 +116,7 @@ const styles = StyleSheet.create({
   },
   iconTextStyle: {
     color: '#a8a6a6',
-    fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 15,
     paddingLeft: 5,
   },
 });
@@ -183,7 +182,9 @@ class DetailScreen extends React.Component {
           <View style={styles.rowStyle}>
             <Text style={styles.concertInfoHeader}>TÍMASETNING</Text>
             <Text style={styles.concertInfo}>
-              {moment(navigation.state.params.dateOfShow).format('llll')}
+              {moment(navigation.state.params.dateOfShow)
+                .format('llll')
+                .toUpperCase()}
             </Text>
           </View>
         </View>
@@ -202,12 +203,12 @@ class DetailScreen extends React.Component {
           >
             {!navigation.state.params.favourited._55 ? (
               <View style={styles.iconStyle}>
-                <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
+                <Icon.FontAwesome name="heart-o" size={22} color="#a8a6a6" />
                 <Text style={styles.iconTextStyle}>Favourite</Text>
               </View>
             ) : (
               <View style={styles.iconStyle}>
-                <Icon.FontAwesome name="heart" size={20} color={Colors.favoritedHeart} />
+                <Icon.FontAwesome name="heart" size={22} color={Colors.favoritedHeart} />
                 <Text style={styles.iconTextStyle}>Unfavourite</Text>
               </View>
             )}

@@ -6,7 +6,7 @@ import {
 /* All styles */
 const styles = StyleSheet.create({
   headerText: {
-    color: 'rgb(47, 49, 51)',
+    color: 'rgb(60, 60, 60)',
     fontWeight: 'bold',
     fontSize: 26,
     textAlign: 'left',
