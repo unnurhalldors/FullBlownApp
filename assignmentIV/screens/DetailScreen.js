@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#fff',
     padding: 16,
+    paddingTop: 25,
   },
   concertMainInfo: {
     flex: 2,
@@ -75,6 +76,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   rowStyle: {
+    flexDirection: 'row',
+    width: '70%',
+  },
+  iconViewStyle: {
     flexDirection: 'row',
   },
   iconStyle: {
@@ -151,7 +156,7 @@ class DetailScreen extends React.Component {
             </Text>
           </View>
         </View>
-        <View style={styles.rowStyle}>
+        <View style={styles.iconViewStyle}>
           <TouchableOpacity
             style={styles.iconStyle}
             onPress={() => {

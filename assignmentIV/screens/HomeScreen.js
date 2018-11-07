@@ -24,7 +24,6 @@ import fetchConcerts from '../actions/concertActions';
 
 /* Components */
 import ListHeader from '../components/ListHeader';
-import ListFooter from '../components/ListFooter';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -82,6 +81,9 @@ const styles = StyleSheet.create({
   },
   calendarIcon: {
     paddingRight: 5,
+  },
+  activityIndicator: {
+    paddingTop: 50,
   },
 });
 
@@ -172,14 +174,15 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.listContainer}>
           <FlatList
-            ListEmptyComponent={<ActivityIndicator size="large" />}
+            ListEmptyComponent={
+              <ActivityIndicator style={styles.activityIndicator} color="#2f95dc" size="large" />
+            }
             ListHeaderComponent={
               <ListHeader searchString={searchString} onSearch={this.onSearch} />
             }
             data={this.filteredData(concerts)}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={<ListFooter />}
           />
         </ScrollView>
       </View>
