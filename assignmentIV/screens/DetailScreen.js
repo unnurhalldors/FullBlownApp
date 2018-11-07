@@ -1,12 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import {
-  StyleSheet, Text, View, Image, TouchableOpacity, Share,
+  StyleSheet, Text, View, Image, TouchableOpacity, Share, Dimensions,
 } from 'react-native';
+
 import moment from 'moment';
 import 'moment/locale/is';
+
 import { Icon } from 'expo';
 import { connect } from 'react-redux';
+
 import { toggleFavourite } from '../actions/favouriteActions';
 import { constructLink } from '../services/linkService';
 import { handleFavourites } from '../actions/concertActions';
@@ -19,19 +22,38 @@ moment.locale('is');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-between',
     backgroundColor: '#fff',
-    padding: 16,
+    paddingBottom: 16,
+  },
+  imageView: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1.2,
+  },
+  image: {
+    width: Dimensions.get('window').width,
+    height: 270,
+    marginBottom: 15,
   },
   concertMainInfo: {
     flex: 2,
     alignItems: 'center',
   },
+  header: {
+    color: 'rgb(47, 49, 51)',
+    fontWeight: 'bold',
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  concertType: {
+    color: '#a8a6a6',
+    fontWeight: 'bold',
+    paddingTop: 10,
+  },
   concertInfoContainer: {
     flex: 3,
-    alignItems: 'flex-start',
     justifyContent: 'space-between',
     backgroundColor: 'rgba(247,247,247,1.0)',
     shadowColor: '#000',
@@ -40,44 +62,22 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     padding: 20,
   },
-  concertType: {
+  infoHeader: {
     color: '#a8a6a6',
     fontWeight: 'bold',
-    paddingTop: 10,
+    fontSize: 20,
+    textAlign: 'left',
   },
   concertInfo: {
     color: '#2f95dc',
     fontWeight: 'bold',
     paddingLeft: 10,
   },
-  header: {
-    paddingBottom: 10,
-    paddingTop: 20,
-  },
-  headerText: {
-    color: 'rgb(47, 49, 51)',
-    fontWeight: 'bold',
-    fontSize: 24,
-    textAlign: 'center',
-  },
-  detailText: {
-    color: '#a8a6a6',
-    fontWeight: 'bold',
-    fontSize: 20,
-    textAlign: 'left',
-  },
-  imageView: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 1.2,
-  },
-  image: {
-    width: 325,
-    height: 210,
-    marginBottom: 20,
-  },
   rowStyle: {
+    flexDirection: 'row',
+    width: '70%',
+  },
+  iconViewStyle: {
     flexDirection: 'row',
   },
   iconStyle: {
@@ -129,11 +129,11 @@ class DetailScreen extends React.Component {
           <Image style={styles.image} source={{ uri: navigation.state.params.imageSource }} />
         </View>
         <View style={styles.concertMainInfo}>
-          <Text style={styles.headerText}>{navigation.state.params.eventDateName}</Text>
+          <Text style={styles.header}>{navigation.state.params.eventDateName}</Text>
           <Text style={styles.concertType}>{navigation.state.params.name.toUpperCase()}</Text>
         </View>
         <View style={styles.concertInfoContainer}>
-          <Text style={styles.detailText}>Um viðburðinn</Text>
+          <Text style={styles.infoHeader}>Um viðburðinn</Text>
           <View style={styles.rowStyle}>
             <Text>UMSJÓN</Text>
             <Text style={styles.concertInfo}>
@@ -153,7 +153,7 @@ class DetailScreen extends React.Component {
             </Text>
           </View>
         </View>
-        <View style={styles.rowStyle}>
+        <View style={styles.iconViewStyle}>
           <TouchableOpacity
             style={styles.iconStyle}
             onPress={() => {
@@ -168,11 +168,16 @@ class DetailScreen extends React.Component {
             }}
           >
             {!navigation.state.params.favourited._55 ? (
-              <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
+              <View>
+                <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
+                <Text style={styles.iconTextStyle}>Favourite</Text>
+              </View>
             ) : (
-              <Icon.FontAwesome name="heart" size={20} color={Colors.favoritedHeart} />
+              <View>
+                <Icon.FontAwesome name="heart" size={20} color={Colors.favoritedHeart} />
+                <Text style={styles.iconTextStyle}>Unfavourite</Text>
+              </View>
             )}
-            <Text style={styles.iconTextStyle}>Favourite</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconStyle} onPress={this.onShare}>
             <Icon.FontAwesome name="share" size={25} color="#2f95dc" />

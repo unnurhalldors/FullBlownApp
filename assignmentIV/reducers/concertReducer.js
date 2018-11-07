@@ -20,6 +20,7 @@ const concertReducer = (state = [], action) => {
       action.data.forEach((concert) => {
         concert.coordinate = findLatLng(concert.eventHallName);
         concert.favourited = isFavourited(concert.eventDateName, concert.dateOfShow);
+        concert.imageSource = concert.imageSource.replace(/medium/g, 'large');
       });
       return action.data;
     case HANDLE_FAVOURITES:
