@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import {
   StyleSheet, Text, View, Image, TouchableOpacity, Share,
@@ -8,6 +9,8 @@ import { Icon } from 'expo';
 import { connect } from 'react-redux';
 import { toggleFavourite } from '../actions/favouriteActions';
 import { constructLink } from '../services/linkService';
+import { handleFavourites } from '../actions/concertActions';
+import Colors from '../constants/Colors';
 
 /* Setting moment locale to Icelandic */
 moment.locale('is');
@@ -104,7 +107,6 @@ class DetailScreen extends React.Component {
           navigation.state.params.eventDateName,
         ),
       });
-
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
           // shared with activity type of result.activityType
@@ -115,7 +117,7 @@ class DetailScreen extends React.Component {
         // dismissed
       }
     } catch (error) {
-      alert(error.message);
+      throw error;
     }
   };
 
@@ -155,16 +157,21 @@ class DetailScreen extends React.Component {
           <TouchableOpacity
             style={styles.iconStyle}
             onPress={() => {
-              const { dispatch } = this.props;
+              const { dispatch, concerts } = this.props;
               dispatch(
                 toggleFavourite(
                   navigation.state.params.eventDateName,
                   navigation.state.params.dateOfShow,
                 ),
               );
+              dispatch(handleFavourites(concerts, navigation.state.params));
             }}
           >
-            <Icon.FontAwesome name="heart-o" size={25} color="#a8a6a6" />
+            {!navigation.state.params.favourited._55 ? (
+              <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
+            ) : (
+              <Icon.FontAwesome name="heart" size={20} color={Colors.favoritedHeart} />
+            )}
             <Text style={styles.iconTextStyle}>Favourite</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconStyle} onPress={this.onShare}>
@@ -176,5 +183,6 @@ class DetailScreen extends React.Component {
     );
   }
 }
+const mapStateToProps = ({ concertReducer }) => ({ concerts: concertReducer });
 
-export default connect()(DetailScreen);
+export default connect(mapStateToProps)(DetailScreen);

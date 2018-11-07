@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable max-len */
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import {
   ActivityIndicator,
@@ -17,10 +18,11 @@ import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import _compact from 'lodash/compact';
 import moment from 'moment';
+import Colors from '../constants/Colors';
 
 /* Actions */
 import { toggleFavourite } from '../actions/favouriteActions';
-import fetchConcerts from '../actions/concertActions';
+import { fetchConcerts, handleFavourites } from '../actions/concertActions';
 
 /* Components */
 import ListHeader from '../components/ListHeader';
@@ -114,10 +116,16 @@ class HomeScreen extends React.Component {
       style={styles.favoriteHighLight}
       onPress={() => {
         const { dispatch } = this.props;
+        const { concerts } = this.props;
         dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow));
+        dispatch(handleFavourites(concerts, concert));
       }}
     >
-      <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
+      {!concert.favourited._55 ? (
+        <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
+      ) : (
+        <Icon.FontAwesome name="heart" size={20} color={Colors.favoritedHeart} />
+      )}
     </TouchableOpacity>,
   ];
 

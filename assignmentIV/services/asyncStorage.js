@@ -17,9 +17,15 @@ export const storeFavourite = async (eventDateName, dateOfShow) => {
     await AsyncStorage.removeItem(`@${storageKey}:${eventDateName}:${dateOfShow}`);
     return false;
   } catch (error) {
-    alert(error);
+    throw error;
   }
-  return false;
+};
+
+export const isFavourited = async (eventDateName, dateOfShow) => {
+  if ((await AsyncStorage.getItem(`@${storageKey}:${eventDateName}:${dateOfShow}`)) == null) {
+    return false;
+  }
+  return true;
 };
 
 export const getAllFavourites = async () => {
@@ -29,7 +35,7 @@ export const getAllFavourites = async () => {
       return AsyncStorage.multiGet(value);
     }
   } catch (error) {
-    alert(error);
+    throw error;
   }
   return false;
 };

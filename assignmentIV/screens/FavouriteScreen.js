@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import {
   ScrollView,
@@ -15,9 +16,11 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { Icon } from 'expo';
 import { getAllFavourites } from '../services/asyncStorage';
+import Colors from '../constants/Colors';
 
 /* Actions */
 import { fillFavourites, toggleFavourite } from '../actions/favouriteActions';
+import { handleFavourites } from '../actions/concertActions';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -91,11 +94,12 @@ class FavouriteScreen extends React.Component {
     <TouchableOpacity
       style={styles.favoriteHighLight}
       onPress={() => {
-        const { dispatch } = this.props;
+        const { dispatch, concerts } = this.props;
         dispatch(toggleFavourite(concert.eventDateName, concert.dateOfShow));
+        dispatch(handleFavourites(concerts, concert));
       }}
     >
-      <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
+      <Icon.FontAwesome name="heart" size={20} color={Colors.favoritedHeart} />
     </TouchableOpacity>,
   ];
 

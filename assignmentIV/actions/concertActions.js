@@ -1,8 +1,12 @@
-import FETCH_CONCERTS from '../constants/concertConstants';
+import { FETCH_CONCERTS, HANDLE_FAVOURITES } from '../constants/concertConstants';
 
-const fetchConcerts = data => ({
+export const fetchConcerts = data => ({
   type: FETCH_CONCERTS,
   data,
 });
 
-export default fetchConcerts;
+export const handleFavourites = (concerts, concert) => ({
+  type: HANDLE_FAVOURITES,
+  concerts,
+  concert,
+});
