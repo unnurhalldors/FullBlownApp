@@ -1,12 +1,13 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, Image, TouchableOpacity,
+  StyleSheet, Text, View, Image, TouchableOpacity, Share,
 } from 'react-native';
 import moment from 'moment';
 import 'moment/locale/is';
 import { Icon } from 'expo';
 import { connect } from 'react-redux';
 import { toggleFavourite } from '../actions/favouriteActions';
+import { constructLink } from '../services/linkService';
 
 /* Setting moment locale to Icelandic */
 moment.locale('is');
@@ -88,7 +89,32 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
 });
+
 class DetailScreen extends React.Component {
+  onShare = async () => {
+    const { navigation } = this.props;
+    try {
+      const result = await Share.share({
+        message: constructLink(
+          navigation.state.params.imageSource,
+          navigation.state.params.eventDateName,
+        ),
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   render() {
     const { navigation } = this.props;
     return (
@@ -137,7 +163,7 @@ class DetailScreen extends React.Component {
             <Icon.FontAwesome name="heart-o" size={25} color="#a8a6a6" />
             <Text style={styles.iconTextStyle}>Favourite</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconStyle}>
+          <TouchableOpacity style={styles.iconStyle} onPress={this.onShare}>
             <Icon.FontAwesome name="share" size={25} color="#2f95dc" />
             <Text style={styles.iconTextStyle}>Share</Text>
           </TouchableOpacity>

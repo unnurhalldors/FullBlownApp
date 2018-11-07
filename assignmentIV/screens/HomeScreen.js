@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import {
   ActivityIndicator,
@@ -115,7 +116,7 @@ class HomeScreen extends React.Component {
       .then(res => res.json())
       .then(res => dispatch(fetchConcerts(res.results)))
       .catch((err) => {
-        console.log(err);
+        throw err;
       });
   }
 
@@ -178,7 +179,6 @@ class HomeScreen extends React.Component {
   render() {
     const { searchString } = this.state;
     const { concerts } = this.props;
-
     return (
       <View style={styles.container}>
         <View style={styles.searchContainer}>
