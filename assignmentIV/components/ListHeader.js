@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/* Just for decoration */
 class Header extends React.PureComponent {
   render() {
     const { onSearch, searchString } = this.props;

@@ -16,17 +16,13 @@ import { fillFavourites, toggleFavourite } from '../actions/favouriteActions';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignContent: 'center',
     backgroundColor: '#fff',
   },
   favoriteHighLight: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
     width: 70,
-    marginTop: 4,
-    marginBottom: 4,
   },
 });
 

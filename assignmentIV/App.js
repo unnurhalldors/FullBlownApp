@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
 
 /* TODO */
 
-/* fara yfir stíla - taka út það sem er ekki í notkun */
 /* renna yfir readme í lokin - uppfæra ef eitthvað hefur breyst! */
 /* Laga favourites hjarta - gera það rautt þegar concert er favourite-aður */
 
