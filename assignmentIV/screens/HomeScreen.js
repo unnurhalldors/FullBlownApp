@@ -3,10 +3,8 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  Image,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   FlatList,
@@ -16,7 +14,6 @@ import { Icon } from 'expo';
 import Swipeable from 'react-native-swipeable';
 import { connect } from 'react-redux';
 import _compact from 'lodash/compact';
-import moment from 'moment';
 
 /* Actions */
 import { toggleFavourite } from '../actions/favouriteActions';
@@ -24,6 +21,7 @@ import fetchConcerts from '../actions/concertActions';
 
 /* Components */
 import ListHeader from '../components/ListHeader';
+import Concert from '../components/Concert';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -33,40 +31,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: 30,
   },
-  concertContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    borderRadius: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(242,242,242,1.0)',
-    marginLeft: 16,
-    paddingBottom: 20,
-    paddingTop: 20,
-  },
-  concertInfo: {
-    paddingLeft: 8,
-    justifyContent: 'space-around',
-    flex: 1,
-  },
-  imageView: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 1.2,
-  },
-  image: {
-    height: 100,
-    width: 130,
-  },
-  header: {
-    color: 'rgb(47, 49, 51)',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  info: {
-    color: '#a8a6a6',
-    fontSize: 13,
-  },
   favoriteHighLight: {
     flex: 1,
     justifyContent: 'center',
@@ -75,12 +39,6 @@ const styles = StyleSheet.create({
     width: 70,
     marginTop: 4,
     marginBottom: 4,
-  },
-  rowStyle: {
-    flexDirection: 'row',
-  },
-  calendarIcon: {
-    paddingRight: 5,
   },
   activityIndicator: {
     paddingTop: 50,
@@ -130,23 +88,8 @@ class HomeScreen extends React.Component {
 
   renderItem = ({ item }) => (
     <Swipeable rightButtons={this.rightButtons(item)}>
-      <TouchableOpacity style={styles.concertContainer} onPress={() => this.goToDetail(item)}>
-        <View style={styles.imageView}>
-          <Image style={styles.image} source={{ uri: item.imageSource }} />
-        </View>
-        <View style={styles.concertInfo}>
-          <Text style={styles.header}>{item.eventDateName}</Text>
-          <Text style={styles.info}>{item.eventHallName.toUpperCase()}</Text>
-          <View style={styles.rowStyle}>
-            <Icon.FontAwesome
-              style={styles.calendarIcon}
-              name="calendar-check-o"
-              size={15}
-              color="#a8a6a6"
-            />
-            <Text style={styles.info}>{moment(item.dateOfShow).format('llll')}</Text>
-          </View>
-        </View>
+      <TouchableOpacity onPress={() => this.goToDetail(item)}>
+        <Concert concert={item} />
       </TouchableOpacity>
     </Swipeable>
   );
@@ -172,7 +115,7 @@ class HomeScreen extends React.Component {
     const { concerts } = this.props;
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.listContainer}>
+        <ScrollView>
           <FlatList
             ListEmptyComponent={
               <ActivityIndicator style={styles.activityIndicator} color="#2f95dc" size="large" />
