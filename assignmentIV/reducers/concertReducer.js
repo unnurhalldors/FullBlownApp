@@ -17,6 +17,7 @@ const concertReducer = (state = [], action) => {
     case FETCH_CONCERTS:
       action.data.forEach((concert) => {
         concert.coordinate = findLatLng(concert.eventHallName);
+        concert.imageSource = concert.imageSource.replace(/medium/g, 'large');
       });
       return action.data;
     default:

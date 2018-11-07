@@ -22,6 +22,7 @@ import fetchConcerts from '../actions/concertActions';
 /* Components */
 import ListHeader from '../components/ListHeader';
 import Concert from '../components/Concert';
+import NotFound from '../components/NotFound';
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -114,7 +115,11 @@ class HomeScreen extends React.Component {
         <ScrollView>
           <FlatList
             ListEmptyComponent={
-              <ActivityIndicator style={styles.activityIndicator} color="#2f95dc" size="large" />
+              searchString === '' ? (
+                <ActivityIndicator style={styles.activityIndicator} color="#2f95dc" size="extralarge" />
+              ) : (
+                <NotFound />
+              )
             }
             ListHeaderComponent={
               <ListHeader searchString={searchString} onSearch={this.onSearch} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, Image, TouchableOpacity, Share,
+  StyleSheet, Text, View, Image, TouchableOpacity, Share, Dimensions,
 } from 'react-native';
 
 import moment from 'moment';
@@ -21,8 +21,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 16,
-    paddingTop: 25,
+    paddingBottom: 16,
   },
   imageView: {
     shadowColor: '#000',
@@ -31,9 +30,9 @@ const styles = StyleSheet.create({
     shadowRadius: 1.2,
   },
   image: {
-    width: 325,
-    height: 210,
-    marginBottom: 20,
+    width: Dimensions.get('window').width,
+    height: 270,
+    marginBottom: 15,
   },
   concertMainInfo: {
     flex: 2,

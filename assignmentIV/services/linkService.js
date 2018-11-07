@@ -27,7 +27,7 @@ export const constructLink = (imgLink, name) => {
   }
 
   const whiteSpacesRemoved = nameTmp.replace(/ /g, '_');
-  const prefix = 'https://d30qys758zh01z.cloudfront.net/images/medium/';
+  const prefix = 'https://d30qys758zh01z.cloudfront.net/images/large/';
   const withoutPrefix = imgLink.slice(prefix.length, imgLink.length);
   const dotSplit = withoutPrefix.split('.');
   const constant = dotSplit[0];
