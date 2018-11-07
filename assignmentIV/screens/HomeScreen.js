@@ -7,7 +7,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   FlatList,
@@ -24,7 +23,7 @@ import { toggleFavourite } from '../actions/favouriteActions';
 import fetchConcerts from '../actions/concertActions';
 
 /* Components */
-import Header from '../components/Header';
+import ListHeader from '../components/ListHeader';
 import ListFooter from '../components/ListFooter';
 
 /* All Styles */
@@ -76,19 +75,6 @@ const styles = StyleSheet.create({
     width: 70,
     marginTop: 4,
     marginBottom: 4,
-  },
-  searchContainer: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#ccc',
-    width: '100%',
-    padding: 16,
-  },
-  search: {
-    paddingLeft: 10,
-    fontSize: 18,
-    backgroundColor: '#f2f2f2',
-    height: 40,
-    borderRadius: 10,
   },
   rowStyle: {
     flexDirection: 'row',
@@ -183,19 +169,12 @@ class HomeScreen extends React.Component {
     const { concerts } = this.props;
     return (
       <View style={styles.container}>
-        <View style={styles.searchContainer}>
-          <Header />
-          <TextInput
-            placeholder="Search"
-            placeholderTextColor="#a8a6a6"
-            style={styles.search}
-            onChangeText={this.onSearch}
-            value={searchString}
-          />
-        </View>
         <ScrollView contentContainerStyle={styles.listContainer}>
           <FlatList
             ListEmptyComponent={<ActivityIndicator size="large" />}
+            ListHeaderComponent={
+              <ListHeader searchString={searchString} onSearch={this.onSearch} />
+            }
             data={this.filteredData(concerts)}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
