@@ -19,11 +19,6 @@ const styles = StyleSheet.create({
   },
 });
 
-/* TODO */
-
-/* renna yfir readme í lokin - uppfæra ef eitthvað hefur breyst! */
-/* Laga favourites hjarta - gera það rautt þegar concert er favourite-aður */
-
 export default class App extends React.Component {
   render() {
     return (

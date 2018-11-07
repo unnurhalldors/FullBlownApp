@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Share,
   Dimensions,
-  WebView,
   Linking,
 } from 'react-native';
 
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingBottom: 16,
+    paddingBottom: 10,
   },
   imageView: {
     shadowColor: '#000',

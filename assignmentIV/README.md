@@ -13,22 +13,22 @@
 - See list of all available concerts
 - When located at Home or Favourites, you can swipe to the left on each concert to favourite/unfavourite
 - Search for a specific concert
-- See the location of each concert on a map
-- See details on each concert where you can share the concert to _Facebook_ and also favourite/unfavourite
-- Includes local storage so your favourites will still be in place when you open the app again!
+- See the location of all the concerts on a map
+- See details on each concert where you can share the concert, e.g. to _Facebook_, and also favourite/unfavourite
+- Navigate from details to _midi.is_ where you can buy a ticket to the selected concert
+- The app also includes local storage so your favourites will still be in place when you open the app again!
 
 ### What you need
 
 - Expo client `npm install -g expo-cli`
-- Expo mobile app/iOS simulator
-- Note that the device used for developing was **iPhone 8 Plus**
+- Expo mobile app/iOS simulator (preferably **iPhone 8 Plus**)
 
 ### How to run the app
 
 - To run the app enter `expo start --tunnel` in terminal
 - The Map feature works better on a mobile than on a simulator. Hence:
   - Use the QR code to open the app on your mobile
-- Note that the app was developed on **macOS**
+- Note that the app was developed on **macOS** and the the simulator/device used was **iPhone 8 Plus**
 
 ### Implementation inspirations
 
