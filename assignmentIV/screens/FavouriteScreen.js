@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 1,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(247,247,247,1.0)',
+    borderBottomColor: 'rgba(242,242,242,1.0)',
     marginLeft: 16,
     paddingBottom: 20,
     paddingTop: 20,
