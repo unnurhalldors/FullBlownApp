@@ -62,11 +62,39 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     padding: 20,
   },
+  buttonView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  button: {
+    width: 100,
+    height: 40,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: '#2f95dc',
+    backgroundColor: '#2f95dc',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    padding: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
   infoHeader: {
     color: '#a8a6a6',
     fontWeight: 'bold',
     fontSize: 20,
     textAlign: 'left',
+  },
+  concertInfoHeader: {
+    color: 'rgb(55, 55, 55)',
   },
   concertInfo: {
     color: '#2f95dc',
@@ -79,6 +107,7 @@ const styles = StyleSheet.create({
   },
   iconViewStyle: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   iconStyle: {
     flexDirection: 'row',
@@ -133,21 +162,26 @@ class DetailScreen extends React.Component {
           <Text style={styles.concertType}>{navigation.state.params.name.toUpperCase()}</Text>
         </View>
         <View style={styles.concertInfoContainer}>
-          <Text style={styles.infoHeader}>Um viðburðinn</Text>
+          <View style={styles.buttonView}>
+            <Text style={styles.infoHeader}>Um viðburðinn</Text>
+            <TouchableOpacity style={styles.button} onPress={this.changeComponents}>
+              <Text style={styles.buttonText}>Kaupa miða</Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.rowStyle}>
-            <Text>UMSJÓN</Text>
+            <Text style={styles.concertInfoHeader}>UMSJÓN</Text>
             <Text style={styles.concertInfo}>
               {navigation.state.params.userGroupName.toUpperCase()}
             </Text>
           </View>
           <View style={styles.rowStyle}>
-            <Text>STAÐSETNING</Text>
+            <Text style={styles.concertInfoHeader}>STAÐSETNING</Text>
             <Text style={styles.concertInfo}>
               {navigation.state.params.eventHallName.toUpperCase()}
             </Text>
           </View>
           <View style={styles.rowStyle}>
-            <Text>TÍMASETNING</Text>
+            <Text style={styles.concertInfoHeader}>TÍMASETNING</Text>
             <Text style={styles.concertInfo}>
               {moment(navigation.state.params.dateOfShow).format('llll')}
             </Text>
@@ -155,7 +189,6 @@ class DetailScreen extends React.Component {
         </View>
         <View style={styles.iconViewStyle}>
           <TouchableOpacity
-            style={styles.iconStyle}
             onPress={() => {
               const { dispatch, concerts } = this.props;
               dispatch(
@@ -168,12 +201,12 @@ class DetailScreen extends React.Component {
             }}
           >
             {!navigation.state.params.favourited._55 ? (
-              <View>
+              <View style={styles.iconStyle}>
                 <Icon.FontAwesome name="heart-o" size={20} color="#a8a6a6" />
                 <Text style={styles.iconTextStyle}>Favourite</Text>
               </View>
             ) : (
-              <View>
+              <View style={styles.iconStyle}>
                 <Icon.FontAwesome name="heart" size={20} color={Colors.favoritedHeart} />
                 <Text style={styles.iconTextStyle}>Unfavourite</Text>
               </View>
