@@ -116,7 +116,7 @@ class HomeScreen extends React.Component {
           <FlatList
             ListEmptyComponent={
               searchString === '' ? (
-                <ActivityIndicator style={styles.activityIndicator} color="#2f95dc" size="extralarge" />
+                <ActivityIndicator style={styles.activityIndicator} color="#2f95dc" size="large" />
               ) : (
                 <NotFound />
               )
