@@ -1,7 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import {
-  StyleSheet, Text, View, Image, TouchableOpacity, Share, Dimensions,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Share,
+  Dimensions,
+  WebView,
+  Linking,
 } from 'react-native';
 
 import moment from 'moment';
@@ -149,6 +157,18 @@ class DetailScreen extends React.Component {
     }
   };
 
+  onBuyPress = (item) => {
+    const uri = constructLink(item.imageSource, item.eventDateName);
+    // console.log(uri)
+    Linking.canOpenURL(uri).then((supported) => {
+      if (!supported) {
+        console.error('error');
+      } else {
+        return Linking.openURL(uri);
+      }
+    });
+  };
+
   render() {
     const { navigation } = this.props;
     return (
@@ -163,7 +183,10 @@ class DetailScreen extends React.Component {
         <View style={styles.concertInfoContainer}>
           <View style={styles.buttonView}>
             <Text style={styles.infoHeader}>Um viðburðinn</Text>
-            <TouchableOpacity style={styles.button} onPress={this.changeComponents}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.onBuyPress(navigation.state.params)}
+            >
               <Text style={styles.buttonText}>Kaupa miða</Text>
             </TouchableOpacity>
           </View>
