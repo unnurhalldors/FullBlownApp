@@ -25,6 +25,9 @@ import Colors from '../constants/Colors';
 /* Setting moment locale to Icelandic */
 moment.locale('is');
 
+/* Height of the concert image */
+const heightOfImage = Dimensions.get('window').height * 0.37;
+
 /* All Styles */
 const styles = StyleSheet.create({
   container: {
@@ -41,7 +44,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: Dimensions.get('window').width,
-    height: 270,
+    height: heightOfImage,
     marginBottom: 15,
   },
   concertMainInfo: {
@@ -158,10 +161,9 @@ class DetailScreen extends React.Component {
 
   onBuyPress = (item) => {
     const uri = constructLink(item.imageSource, item.eventDateName);
-    // console.log(uri)
     Linking.canOpenURL(uri).then((supported) => {
       if (!supported) {
-        console.error('error');
+        throw new Error('Error: Not supported!');
       } else {
         return Linking.openURL(uri);
       }

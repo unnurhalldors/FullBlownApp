@@ -26,7 +26,7 @@
 ### How to run the app
 
 - To run the app enter `expo start --tunnel` in terminal
-- The Map feature works better on a mobile than on a simulator. Hence:
+- The Map and Share features work better on a mobile than on a simulator. Hence:
   - Use the QR code to open the app on your mobile
 - Note that the app was developed on **macOS** and the the simulator/device used was **iPhone 8 Plus**
 

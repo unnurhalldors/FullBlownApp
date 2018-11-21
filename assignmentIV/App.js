@@ -6,10 +6,10 @@ import {
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import AppNavigator from './navigation/AppNavigator';
+import AppNavigator from './src/navigation/AppNavigator';
 
 /* Reducers */
-import reducers from './reducers/reducers';
+import reducers from './src/reducers/reducers';
 
 /* All styles */
 const styles = StyleSheet.create({

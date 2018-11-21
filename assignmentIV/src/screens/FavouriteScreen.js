@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import {
-  ScrollView, StyleSheet, FlatList, TouchableOpacity, AsyncStorage,
+  ScrollView, StyleSheet, FlatList, TouchableOpacity,
 } from 'react-native';
 
 import Swipeable from 'react-native-swipeable';
@@ -84,7 +84,6 @@ class FavouriteScreen extends React.Component {
   };
 
   render() {
-    // AsyncStorage.clear();
     const { favourites } = this.props;
     return (
       <ScrollView contentContainerStyle={styles.container}>
