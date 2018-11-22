@@ -11,9 +11,9 @@
 ### What you can do
 
 - See list of all available concerts
-- When located at Home or Favourites, you can swipe to the left on each concert to favourite/unfavourite
 - Search for a specific concert
-- See the location of all the concerts on a map
+- When located at Home or Favourites, you can swipe to the left on each concert to favourite/unfavourite
+- See the location of all the concerts on a map (click the red icon on the map to see name and venue)
 - See details on each concert where you can share the concert, e.g. to _Facebook_, and also favourite/unfavourite
 - Navigate from details to _midi.is_ where you can buy a ticket to the selected concert
 - The app also includes local storage so your favourites will still be in place when you open the app again!
@@ -22,6 +22,7 @@
 
 - Expo client `npm install -g expo-cli`
 - Expo mobile app/iOS simulator (preferably **iPhone 8 Plus**)
+- Run `npm install` in the root
 
 ### How to run the app
 
