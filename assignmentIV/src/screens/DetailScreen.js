@@ -26,7 +26,7 @@ import Colors from '../constants/Colors';
 moment.locale('is');
 
 /* Height of the concert image */
-const heightOfImage = Dimensions.get('window').height * 0.37;
+const heightOfImage = Dimensions.get('window').height * 0.35;
 
 /* All Styles */
 const styles = StyleSheet.create({
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#fff',
-    paddingBottom: 10,
   },
   imageView: {
     shadowColor: '#000',
@@ -45,32 +44,40 @@ const styles = StyleSheet.create({
   image: {
     width: Dimensions.get('window').width,
     height: heightOfImage,
-    marginBottom: 15,
   },
   concertMainInfo: {
-    flex: 2,
+    flex: 1,
     alignItems: 'center',
+    margin: 10,
+    marginBottom: 10,
   },
   header: {
     color: 'rgb(60, 60, 60)',
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 20,
     textAlign: 'center',
   },
   concertType: {
     color: '#a8a6a6',
+    paddingTop: 6,
     fontWeight: 'bold',
-    paddingTop: 10,
+  },
+  bla: {
+    flex: 3.5,
+    margin: 15,
+    marginTop: 0,
+    marginBottom: 0,
   },
   concertInfoContainer: {
-    flex: 3,
-    justifyContent: 'space-between',
+    flex: 1,
+    justifyContent: 'space-around',
     backgroundColor: 'rgba(247,247,247,1.0)',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 1,
-    padding: 20,
+    padding: 12,
+    paddingTop: 0,
   },
   buttonView: {
     flexDirection: 'row',
@@ -94,13 +101,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 'bold',
   },
   infoHeader: {
     color: '#a8a6a6',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'left',
   },
   concertInfoHeader: {
@@ -113,16 +120,20 @@ const styles = StyleSheet.create({
   },
   rowStyle: {
     flexDirection: 'row',
-    width: '70%',
+    width: '90%',
+  },
+  divider: {
+    width: 50,
   },
   iconViewStyle: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   iconStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    padding: 10,
   },
   iconTextStyle: {
     color: '#a8a6a6',
@@ -181,66 +192,69 @@ class DetailScreen extends React.Component {
           <Text style={styles.header}>{navigation.state.params.eventDateName}</Text>
           <Text style={styles.concertType}>{navigation.state.params.name.toUpperCase()}</Text>
         </View>
-        <View style={styles.concertInfoContainer}>
-          <View style={styles.buttonView}>
-            <Text style={styles.infoHeader}>Um viðburðinn</Text>
+        <View style={styles.bla}>
+          <View style={styles.concertInfoContainer}>
+            <View style={styles.buttonView}>
+              <Text style={styles.infoHeader}>Um viðburðinn</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.onBuyPress(navigation.state.params)}
+              >
+                <Text style={styles.buttonText}>Kaupa miða</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.rowStyle}>
+              <Text style={styles.concertInfoHeader}>UMSJÓN</Text>
+              <Text style={styles.concertInfo}>
+                {navigation.state.params.userGroupName.toUpperCase()}
+              </Text>
+            </View>
+            <View style={styles.rowStyle}>
+              <Text style={styles.concertInfoHeader}>STAÐSETNING</Text>
+              <Text style={styles.concertInfo}>
+                {navigation.state.params.eventHallName.toUpperCase()}
+              </Text>
+            </View>
+            <View style={styles.rowStyle}>
+              <Text style={styles.concertInfoHeader}>TÍMASETNING</Text>
+              <Text style={styles.concertInfo}>
+                {moment(navigation.state.params.dateOfShow)
+                  .format('llll')
+                  .toUpperCase()}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.iconViewStyle}>
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.onBuyPress(navigation.state.params)}
+              onPress={() => {
+                const { dispatch, concerts } = this.props;
+                dispatch(
+                  toggleFavourite(
+                    navigation.state.params.eventDateName,
+                    navigation.state.params.dateOfShow,
+                  ),
+                );
+                dispatch(handleFavourites(concerts, navigation.state.params));
+              }}
             >
-              <Text style={styles.buttonText}>Kaupa miða</Text>
+              {!navigation.state.params.favourited._55 ? (
+                <View style={styles.iconStyle}>
+                  <Icon.FontAwesome name="heart-o" size={22} color="#a8a6a6" />
+                  <Text style={styles.iconTextStyle}>Favourite</Text>
+                </View>
+              ) : (
+                <View style={styles.iconStyle}>
+                  <Icon.FontAwesome name="heart" size={22} color={Colors.favoritedHeart} />
+                  <Text style={styles.iconTextStyle}>Unfavourite</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+            <View style={styles.divider} />
+            <TouchableOpacity style={styles.iconStyle} onPress={this.onShare}>
+              <Icon.FontAwesome name="share" size={25} color="#2f95dc" />
+              <Text style={styles.iconTextStyle}>Share</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.rowStyle}>
-            <Text style={styles.concertInfoHeader}>UMSJÓN</Text>
-            <Text style={styles.concertInfo}>
-              {navigation.state.params.userGroupName.toUpperCase()}
-            </Text>
-          </View>
-          <View style={styles.rowStyle}>
-            <Text style={styles.concertInfoHeader}>STAÐSETNING</Text>
-            <Text style={styles.concertInfo}>
-              {navigation.state.params.eventHallName.toUpperCase()}
-            </Text>
-          </View>
-          <View style={styles.rowStyle}>
-            <Text style={styles.concertInfoHeader}>TÍMASETNING</Text>
-            <Text style={styles.concertInfo}>
-              {moment(navigation.state.params.dateOfShow)
-                .format('llll')
-                .toUpperCase()}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.iconViewStyle}>
-          <TouchableOpacity
-            onPress={() => {
-              const { dispatch, concerts } = this.props;
-              dispatch(
-                toggleFavourite(
-                  navigation.state.params.eventDateName,
-                  navigation.state.params.dateOfShow,
-                ),
-              );
-              dispatch(handleFavourites(concerts, navigation.state.params));
-            }}
-          >
-            {!navigation.state.params.favourited._55 ? (
-              <View style={styles.iconStyle}>
-                <Icon.FontAwesome name="heart-o" size={22} color="#a8a6a6" />
-                <Text style={styles.iconTextStyle}>Favourite</Text>
-              </View>
-            ) : (
-              <View style={styles.iconStyle}>
-                <Icon.FontAwesome name="heart" size={22} color={Colors.favoritedHeart} />
-                <Text style={styles.iconTextStyle}>Unfavourite</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconStyle} onPress={this.onShare}>
-            <Icon.FontAwesome name="share" size={25} color="#2f95dc" />
-            <Text style={styles.iconTextStyle}>Share</Text>
-          </TouchableOpacity>
         </View>
       </View>
     );

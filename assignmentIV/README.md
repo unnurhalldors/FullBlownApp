@@ -41,3 +41,4 @@
 - Team-members used GitHub and Git to host and manage the code
 - Team-members used the .eslintrc.json that was provided for Assignment I
 - Team-members decided that all tab titles, headers and such should be in English - but concert titles, locations and dates in Icelandic.
+- The app has been published and you can use `https://expo.io/@hkh95/assignmentIV` to access it. This only works for Andorid due to restrictions imposed by apple.
